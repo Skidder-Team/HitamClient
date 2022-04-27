@@ -49,8 +49,9 @@ object LiquidBounce {
     const val COLORED_NAME = "§b§lSkidClient"
     const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
     const val CLIENT_WEBSITE = "skid.client"
-    const val MINECRAFT_VERSION = "1.8.9"
-    const val COMMIT_ID = "${git.commit.id}"
+    const val MINECRAFT_VERSION = "1.8.9" 
+    const val COMMIT_ID = it["git.commmit.id"]
+
 
     @JvmField
     val gitInfo = Properties().also {

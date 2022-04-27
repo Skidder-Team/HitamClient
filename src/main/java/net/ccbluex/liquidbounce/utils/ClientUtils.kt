@@ -18,7 +18,7 @@ import java.util.*
 
 object
 ClientUtils : MinecraftInstance() {
-    private val logger = LogManager.getLogger("FDPClient")
+    private val logger = LogManager.getLogger("Skid Client")
 
     /**
      * the hardware id used to identify in bstats
