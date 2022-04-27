@@ -50,7 +50,6 @@ object LiquidBounce {
     const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
     const val CLIENT_WEBSITE = "skid.client"
     const val MINECRAFT_VERSION = "1.8.9" 
-    const val COMMIT_ID = it["git.commmit.id"]
 
 
     @JvmField
@@ -70,6 +69,8 @@ object LiquidBounce {
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if(it == "main") "dev" else it
     }
+    @JvmField
+    val CLIENT_COMMIT_ID = gitInfo["git.commit.id"]
 
     var isStarting = true
     var isLoadingConfig = true
