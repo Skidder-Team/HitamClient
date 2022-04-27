@@ -70,7 +70,7 @@ object LiquidBounce {
         if(it == "main") "dev" else it
     }
     @JvmField
-    val CLIENT_COMMIT_ID = gitInfo["git.commit.id"]
+    val CLIENT_COMMIT_ID = gitInfo["git.commit.id.abbrev"]
 
     var isStarting = true
     var isLoadingConfig = true
