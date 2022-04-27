@@ -12,7 +12,7 @@ class CommandManager {
     val commands = HashMap<String, Command>()
     var latestAutoComplete: Array<String> = emptyArray()
 
-    var prefix = '.'
+    var prefix = ';'
 
     /**
      * Register all default commands

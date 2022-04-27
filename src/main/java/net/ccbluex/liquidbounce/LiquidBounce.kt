@@ -189,9 +189,11 @@ object LiquidBounce {
         }
 
         // run update checker
+        /*
         if(CLIENT_VERSION != "unknown") {
             thread(block = this::checkUpdate)
         }
+        */
 
         ClientUtils.logInfo("$CLIENT_NAME $CLIENT_VERSION loaded in ${(System.currentTimeMillis() - startTime)}ms!")
     }
