@@ -27,3 +27,6 @@ build
 run
 .DS_Store
 Thumbs.db
+
+#config bot github
+.imgbotconfig
