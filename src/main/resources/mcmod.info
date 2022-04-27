@@ -1,13 +1,13 @@
 [
   {
-    "modid": "fdpclient",
-    "name": "FDPClient",
+    "modid": "skidclient",
+    "name": "SkidClient",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://getfdp.today",
+    "url": "https://skid.client",
     "updateUrl": "",
-    "authorList": ["CCBlueX", "UnlegitMC"],
+    "authorList": ["Necro", "JektDV", "Liep_"],
     "credits": "",
     "logoFile": "",
     "screenshots": [],

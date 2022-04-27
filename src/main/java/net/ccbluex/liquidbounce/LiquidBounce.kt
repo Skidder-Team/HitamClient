@@ -45,10 +45,10 @@ import kotlin.concurrent.thread
 object LiquidBounce {
 
     // Client information
-    const val CLIENT_NAME = "FDPClient"
-    const val COLORED_NAME = "§c§lFDP§6§lClient"
-    const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"
-    const val CLIENT_WEBSITE = "GetFDP.Today"
+    const val CLIENT_NAME = "SkidClient"
+    const val COLORED_NAME = "§b§lSkidClient"
+    const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
+    const val CLIENT_WEBSITE = "skid.client"
     const val MINECRAFT_VERSION = "1.8.9"
 
     @JvmField
@@ -63,7 +63,7 @@ object LiquidBounce {
 
     // 自动读取客户端版本
     @JvmField
-    val CLIENT_VERSION = gitInfo["git.commit.id.abbrev"]?.let { "git-$it" } ?: "unknown"
+    val CLIENT_VERSION = "v0.0.1-SNAPSHOT"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if(it == "main") "stable" else it

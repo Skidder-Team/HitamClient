@@ -11,10 +11,10 @@ import java.time.OffsetDateTime
 import kotlin.concurrent.thread
 
 object DiscordRPC {
-    private val ipcClient = IPCClient(871606857981128724)
+    private val ipcClient = IPCClient(968786352739082280)
     private val timestamp = OffsetDateTime.now()
     private var running = false
-    private var fdpwebsite = "getfdp.today - "
+    private var fdpwebsite = "skid.client - "
 
     fun run() {
         ipcClient.setListener(object : IPCListener {
@@ -41,7 +41,7 @@ object DiscordRPC {
     private fun update() {
         val builder = RichPresence.Builder()
         builder.setStartTimestamp(timestamp)
-        builder.setLargeImage("cfb8fe2fe9169dc68f7f8c1236b885")
+        builder.setLargeImage("epep")
         builder.setDetails(fdpwebsite + LiquidBounce.CLIENT_VERSION)
         ServerUtils.getRemoteIp().also {
             builder.setState(if(it.equals("idling", true)) "Idling" else "Server: $it ")

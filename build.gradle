@@ -16,9 +16,9 @@ repositories {
     maven { url = "https://repo.getfdp.today/" }
 }
 
-version = "3.0.0"
-group = "org.unlegitmc.fdp"
-archivesBaseName = "FDPClient"
+version = "0.0.1-SNAPSHOT"
+group = "dev.skid.client"
+archivesBaseName = "SkidClient"
 
 sourceCompatibility = targetCompatibility = 1.8
 compileJava.options.encoding = "UTF-8"
