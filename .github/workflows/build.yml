@@ -20,6 +20,10 @@ jobs:
       - name: Set outputs
         id: vars
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 6.9.1
       - name: Build
         run: gradle setupCiWorkspace && gradle build
       - name: Rename build artifacts
