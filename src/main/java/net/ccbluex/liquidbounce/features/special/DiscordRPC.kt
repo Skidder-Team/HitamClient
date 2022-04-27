@@ -44,7 +44,7 @@ object DiscordRPC {
         builder.setLargeImage("epep")
         builder.setDetails(fdpwebsite + LiquidBounce.CLIENT_VERSION)
         ServerUtils.getRemoteIp().also {
-            builder.setState(if(it.equals("idling", true)) "Idling" else "Server: $it ")
+            builder.setState(if(it.equals("idling", true)) "Playing Bloc Game 1.8.9" else "Skidding on $it ")
         }
 
         // Check ipc client is connected and send rpc
