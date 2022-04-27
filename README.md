@@ -1,8 +1,6 @@
 # SKID CLIENT
 ### Client untuk bocah hitam!
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/UnlegitMC/FDPClient)
-![GitHub lines of code](https://tokei.rs/b1/github/UnlegitMC/FDPClient)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
 [![Crowdin](https://badges.crowdin.net/fdpclient/localized.svg)](https://translate.getfdp.today/project/fdpclient)
@@ -10,11 +8,11 @@ A free mixin-based injection hacked-client for Minecraft using Minecraft Forge b
 
 Website: https://getfdp.today/  
 Latest: [github-actions](https://github.com/UnlegitMC/FDPClient/actions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
-Discord: https://discord.gg/55x7TaHWXG  
+Discord: Gada Banh ☝️😅
 Gitee mirror: https://gitee.com/fdpclient-cn/FDPClient
 
 ## Issues
-If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/UnlegitMC/FDPClient/issues).
+Kalo ketemu Issue fix sendiri / ngomong di grup 😅
 
 ## License
 This project is subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.
