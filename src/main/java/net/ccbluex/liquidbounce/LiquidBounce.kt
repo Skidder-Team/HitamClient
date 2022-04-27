@@ -45,11 +45,12 @@ import kotlin.concurrent.thread
 object LiquidBounce {
 
     // Client information
-    const val CLIENT_NAME = "SkidClient"
+    const val CLIENT_NAME = "Skid Client"
     const val COLORED_NAME = "§b§lSkidClient"
     const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
     const val CLIENT_WEBSITE = "skid.client"
     const val MINECRAFT_VERSION = "1.8.9"
+    const val COMMIT_ID = ["git.commit.id"]
 
     @JvmField
     val gitInfo = Properties().also {
@@ -66,7 +67,7 @@ object LiquidBounce {
     val CLIENT_VERSION = "v0.0.1-SNAPSHOT"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
-        if(it == "main") "stable" else it
+        if(it == "main") "dev" else it
     }
 
     var isStarting = true
