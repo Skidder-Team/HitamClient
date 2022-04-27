@@ -4,9 +4,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
 
-###A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
+### A free 1.8.9 mixin-based injection hacked-client for Minecraft using Minecraft Forge based on FDP that based on LiquidBounce.
 
-Website: https://getfdp.today/  
+Website: [Alert, fdp is discontinued their project & site](https://getfdp.today/)
 Latest: [github-actions](https://github.com/UnlegitMC/FDPClient/actions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
 Discord: Gada Banh ☝️😅
 
@@ -44,7 +44,7 @@ FDPClient uses gradle, so make sure that it is installed properly. Instructions 
 ### Mixins
 Mixins can be used to modify classes at runtime before they are loaded. FDPClient uses it to inject its code into the Minecraft client. This way, we do not have to ship Mojangs copyrighted code. If you want to learn more about it, check out its [Documentation](https://docs.spongepowered.org/5.1.0/en/plugin/internals/mixins.html).
 ### Ultralight
-Ultralight is a HTML renderer and can be works with LWJGL. If you want to learn more about it, check out its [repo](https://github.com/labymod/ultralight-java)
+Ultralight is a HTML renderer and can be works with LWJGL. If you want to learn more about it, check out its [GitHub repo](https://github.com/labymod/ultralight-java)
 
 ## Contributing
 We are welcome for your contributing, but you have to follow these rules to make us merge your pull request.
@@ -71,7 +71,7 @@ Timer().schedule(object : TimerTask(){
 ~~~
 
 ### Skid codes
-Please use original code if you can, and no direct code steals, but we welcome skid using packet logger or anything else like that to skid from a close source and make the cheating community more open!
+Namanya aja skid client, ya pasti boleh skid lah 😅
 
 ### Useless features
 Useless features means feature only you think its usable ,or feature can be have with config change.  
