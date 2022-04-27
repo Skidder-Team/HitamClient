@@ -61,7 +61,7 @@ object LiquidBounce {
         }
     }
 
-    // 自动读取客户端版本
+    // 自动读取客户端版本 (ching chong)
     @JvmField
     val CLIENT_VERSION = "v0.0.1-SNAPSHOT"
     @JvmField
