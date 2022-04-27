@@ -1,5 +1,5 @@
 {
-    "schedule": "weekly", // daily|weekly|monthly
+    "schedule": "daily", // daily|weekly|monthly
     "ignoredFiles": [
         "*.jpeg",                  // ignore by extension
         "*.jpg",
