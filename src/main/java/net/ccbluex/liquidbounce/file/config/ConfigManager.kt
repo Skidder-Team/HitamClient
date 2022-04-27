@@ -30,7 +30,7 @@ class ConfigManager {
     fun load(name: String, save: Boolean = true) {
         LiquidBounce.isLoadingConfig = true
         if (save && nowConfig != name) {
-            save(true, true) // 保存老配置
+            save(true, true) // 保存老配置 (ching chong)
         }
 
         nowConfig = name
@@ -39,7 +39,7 @@ class ConfigManager {
         val json = if (configFile.exists()) {
             JsonParser().parse(configFile.reader(Charsets.UTF_8)).asJsonObject
         } else {
-            JsonObject() // 这样方便一点,虽然效率会低
+            JsonObject() // 这样方便一点,虽然效率会低 (ching chong)
         }
 
         for (section in sections) {

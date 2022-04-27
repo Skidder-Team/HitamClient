@@ -46,6 +46,7 @@ object LiquidBounce {
 
     // Client information
     const val CLIENT_NAME = "Skid Client"
+    const val CLIENT_NAME_NOSPACE = "SkidClient"
     const val COLORED_NAME = "§b§lSkidClient"
     const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
     const val CLIENT_WEBSITE = "skid.client"
