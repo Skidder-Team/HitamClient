@@ -3,13 +3,12 @@
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
-[![Crowdin](https://badges.crowdin.net/fdpclient/localized.svg)](https://translate.getfdp.today/project/fdpclient)
-A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
+
+###A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
 
 Website: https://getfdp.today/  
 Latest: [github-actions](https://github.com/UnlegitMC/FDPClient/actions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
 Discord: Gada Banh ☝️😅
-Gitee mirror: https://gitee.com/fdpclient-cn/FDPClient
 
 ## Issues
 Kalo ketemu Issue fix sendiri / ngomong di grup 😅
