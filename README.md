@@ -1,13 +1,8 @@
 # HITAM CLIENT
 ### Client untuk bocah hitam!
-[![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
-![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
 
 ### A free 1.8.9 mixin-based injection hacked-client for Minecraft using Minecraft Forge based on FDP that based on LiquidBounce.
 
-Website: [Alert, fdp is discontinued their project & site](https://getfdp.today/)
-Latest: [github-actions](https://github.com/UnlegitMC/FDPClient/actions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
 Discord: Gada Banh ☝️😅
 
 ## Issues
