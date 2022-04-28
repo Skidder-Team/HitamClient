@@ -15,7 +15,6 @@ import net.minecraft.client.gui.*
 import net.minecraft.client.resources.I18n
 import net.minecraftforge.fml.client.GuiModList
 import java.awt.Color
-import org.lwjgl.input.Mouse
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     override fun initGui() {
@@ -51,7 +50,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             RenderUtils.drawRect(start, 15f, start + mc.fontRendererObj.getStringWidth(str), 15f + mc.fontRendererObj.FONT_HEIGHT, Color.BLACK.rgb)
             mc.fontRendererObj.drawString(str, start, 15f, Color.WHITE.rgb, false)
         }
-        Gui.drawModalRectWithCustomSizedTexture(-21 + (Mouse.getX() / 90), ((Mouse.getY() * -1 / 90)), 0.0f, 0.0f, width + 20, height + 20, width.toFloat() + 21, height.toFloat() + 20);
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
