@@ -1,8 +1,14 @@
 name: build
 
 on:
-  - push
-
+  push:
+    paths-ignore:
+      - '**/README.md'
+      - '**/LICENSE'
+      - '**/.gitignore'
+      - '**/.gitmodules'
+      - '**/.imgbotconfig'
+  
 jobs:
   build:
     runs-on: ubuntu-latest
