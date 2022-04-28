@@ -45,11 +45,11 @@ import kotlin.concurrent.thread
 object LiquidBounce {
 
     // Client information
-    const val CLIENT_NAME = "Skid Client"
-    const val CLIENT_NAME_NOSPACE = "SkidClient"
-    const val COLORED_NAME = "§b§lSkidClient"
+    const val CLIENT_NAME = "Hitam Client"
+    const val CLIENT_NAME_NOSPACE = "HitamClient"
+    const val COLORED_NAME = "§b§lHitamClient"
     const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
-    const val CLIENT_WEBSITE = "skid.client"
+    const val CLIENT_WEBSITE = "hitam.client"
     const val MINECRAFT_VERSION = "1.8.9" 
 
 
