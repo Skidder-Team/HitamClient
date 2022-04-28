@@ -1,13 +1,13 @@
 [
   {
-    "modid": "skidclient",
-    "name": "SkidClient",
+    "modid": "hitamclient",
+    "name": "HitamClient",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://skid.client",
     "updateUrl": "",
-    "authorList": ["Necro", "JektDV", "Liep_"],
+    "authorList": ["Necro", "JektDV", "Liep_", "Walter", "AviMuh"],
     "credits": "",
     "logoFile": "",
     "screenshots": [],

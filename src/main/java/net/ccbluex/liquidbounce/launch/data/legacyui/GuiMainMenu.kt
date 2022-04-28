@@ -50,7 +50,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             RenderUtils.drawRect(start, 15f, start + mc.fontRendererObj.getStringWidth(str), 15f + mc.fontRendererObj.FONT_HEIGHT, Color.BLACK.rgb)
             mc.fontRendererObj.drawString(str, start, 15f, Color.WHITE.rgb, false)
         }
-
+        Gui.drawModalRectWithCustomSizedTexture(-21 + (Mouse.getX() / 90), ((Mouse.getY() * -1 / 90)), 0, 0, width + 20, height + 20, width + 21, height + 20)
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
