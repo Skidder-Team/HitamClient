@@ -25,9 +25,9 @@ jobs:
       - name: Build
         run: gradle setupCiWorkspace && gradle build
       - name: Rename build artifacts
-        run: mv build/libs/SkidClient-*.jar build/libs/SkidClient-${{ steps.vars.outputs.sha_short }}.jar
+        run: mv build/libs/HitamClient-*.jar build/libs/HitamClient-b${{ steps.vars.outputs.sha_short }}.jar
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: SkidClient
-          path: build/libs/SkidClient-${{ steps.vars.outputs.sha_short }}.jar
+          name: HitamClient
+          path: build/libs/HitamClient-b${{ steps.vars.outputs.sha_short }}.jar

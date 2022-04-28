@@ -48,7 +48,7 @@ object LiquidBounce {
     const val CLIENT_NAME = "Hitam Client"
     const val CLIENT_NAME_NOSPACE = "HitamClient"
     const val COLORED_NAME = "§b§lHitamClient"
-    const val CLIENT_CREATOR = "Necro, JektDV and Liep_"
+    const val CLIENT_CREATOR = "Skid Development (Necro, JektDV , Liep_, Walter, AviMuh, Cavry)"
     const val CLIENT_WEBSITE = "hitam.client"
     const val MINECRAFT_VERSION = "1.8.9" 
 

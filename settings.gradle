@@ -24,4 +24,4 @@ pluginManagement {
 	}
 }
 
-rootProject.name = 'SkidClient'
+rootProject.name = 'HitamClient'

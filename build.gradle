@@ -18,7 +18,7 @@ repositories {
 
 version = "0.0.1-SNAPSHOT"
 group = "dev.skid.client"
-archivesBaseName = "SkidClient"
+archivesBaseName = "HitamClient"
 
 sourceCompatibility = targetCompatibility = 1.8
 compileJava.options.encoding = "UTF-8"

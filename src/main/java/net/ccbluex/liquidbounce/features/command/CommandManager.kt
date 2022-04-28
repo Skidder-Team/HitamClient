@@ -63,7 +63,7 @@ class CommandManager {
 
                 tabCompletions?.toTypedArray()
             } else {
-                commands.map { ".${it.key}" }.filter { it.lowercase().startsWith(args[0].lowercase()) }.toTypedArray()
+                commands.map { ";${it.key}" }.filter { it.lowercase().startsWith(args[0].lowercase()) }.toTypedArray()
             }
         }
         return null

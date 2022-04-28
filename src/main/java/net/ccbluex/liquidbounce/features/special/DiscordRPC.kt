@@ -14,7 +14,7 @@ object DiscordRPC {
     private val ipcClient = IPCClient(968786352739082280)
     private val timestamp = OffsetDateTime.now()
     private var running = false
-    private var fdpwebsite = "skid.client - "
+    private var fdpwebsite = "hitam.client - "
 
     fun run() {
         ipcClient.setListener(object : IPCListener {
@@ -42,7 +42,7 @@ object DiscordRPC {
         val builder = RichPresence.Builder()
         builder.setStartTimestamp(timestamp)
         builder.setLargeImage("epep")
-        builder.setDetails("Skidding minecraft 1.8.9")
+        builder.setDetails("Playing Block Game ${LiquidBounce.MINECRAFT_VERSION}")
         ServerUtils.getRemoteIp().also {
             builder.setState(if(it.equals("idling", true)) "Currently not skidding" else "Skidding on $it ")
         }

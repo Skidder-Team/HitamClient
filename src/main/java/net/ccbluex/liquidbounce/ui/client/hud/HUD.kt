@@ -31,7 +31,7 @@ open class HUD : MinecraftInstance() {
          */
         fun createDefault(): HUD {
             val text1 = Text(x = 15.0, y = 15.0)
-            text1.displayString.set("Skid Client | %serverIp% | %fps% FPS")
+            text1.displayString.set("Hitam Client | %serverIp% | %fps% FPS")
             text1.colorModeValue.set("Rainbow")
             text1.rectValue.set("OneTap")
             text1.rectColorModeValue.set("Rainbow")

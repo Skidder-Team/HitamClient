@@ -1,4 +1,4 @@
-# SKID CLIENT
+# HITAM CLIENT
 ### Client untuk bocah hitam!
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
@@ -31,7 +31,7 @@ this project entirely or partially for free and even commercially. However, plea
 Do the above and share your source code with everyone; just like we do.
 
 ## Setting up a Workspace
-FDPClient uses gradle, so make sure that it is installed properly. Instructions can be found on [Gradle's website](https://gradle.org/install/).
+HitamClient uses gradle, so make sure that it is installed properly. Instructions can be found on [Gradle's website](https://gradle.org/install/).
 1. Clone the repository using `git clone --recurse-submodules https://github.com/UnlegitMC/FDPClient.git`. 
 2. CD into the local repository folder.
 3. Depending on which IDE you are using execute either of the following commands:
@@ -71,7 +71,7 @@ Timer().schedule(object : TimerTask(){
 ~~~
 
 ### Skid codes
-Namanya aja skid client, ya pasti boleh skid lah 😅
+Awas lu ya banhj skid ini nanti aku aduin ke mamahku lho jahat kamu banhk 😭😭😭😭😭
 
 ### Useless features
 Useless features means feature only you think its usable ,or feature can be have with config change.  
