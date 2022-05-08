@@ -65,7 +65,7 @@ object LiquidBounce {
 
     // 自动读取客户端版本 (bahasa felix tjonghoa)
     @JvmField
-    val CLIENT_VERSION = "v1.0-BETA"
+    val CLIENT_VERSION = "v1.0.0"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if(it == "main") "dev" else it
