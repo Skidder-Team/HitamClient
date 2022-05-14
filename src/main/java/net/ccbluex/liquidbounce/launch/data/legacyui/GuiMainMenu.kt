@@ -72,10 +72,10 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         Thread {
             if(LiquidBounce.CLIENTTEXT.contains("Waiting") || LiquidBounce.CLIENTTEXT.contains("Oops")) {
                 try {
-                    LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpclient.club/changelogs")
+                    LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT$Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
                 } catch (e: Exception) {
                     try {
-                        LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpclient.club/changelogs")
+                        LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT$Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
                     } catch (e: Exception) {
                         LiquidBounce.CLIENTTEXT = "Oops.. :(\$Can't get information!#Try reopen the main menu\$140\$80"
                     }
@@ -113,9 +113,8 @@ override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
     
     /* For modification, please keep "Designed by XiGua" */
 
-    FontLoaders.F16.drawString("Made by UnlegitMC Team & Designed by XiGua",10f,this.height-15f,Color(255,255,255,170).rgb)
-    FontLoaders.F16.drawString(LiquidBounce.VERIFY,10f,this.height-25f,if(LiquidBounce.VERIFY.contains("Insecure")) Color(255,58,58,170).rgb else Color(255,255,255,170).rgb)
-    var versionMsg="Version: "+LiquidBounce.CLIENT_VERSION+if (LiquidBounce.VERSIONTYPE.contains("Release")) " | Release" else " | "+LiquidBounce.VERSIONTYPE+" (May be isn't work)"
+    FontLoaders.F16.drawString("Made by Skid Development (Skidder Team)",10f,this.height-15f,Color(255,255,255,170).rgb)
+    var versionMsg="Version: "+LiquidBounce.CLIENT_VERSION+if (LiquidBounce.VERSIONTYPE.contains("Release")) " | Release" else " | " + LiquidBounce.VERSIONTYPE
     FontLoaders.F16.drawString(versionMsg,this.width - FontLoaders.F16.getStringWidth(versionMsg) - 10F,this.height-15f,Color(255,255,255,170).rgb)
 
     //
@@ -187,7 +186,7 @@ when (button.id) {
     102 -> displayed=false
     103 -> mc.displayGuiScreen(GuiModList(this))
     104 -> mc.displayGuiScreen(GuiBackground(this))
-    514 -> MiscUtils.showURL("https://${LiquidBounce.CLIENT_WEBSITE}/discord.html")
+    514 -> MiscUtils.showURL("https://discord.necro.ml/")
     114 -> MiscUtils.showURL("https://${LiquidBounce.CLIENT_WEBSITE}")
     191 -> LiquidBounce.Darkmode=!LiquidBounce.Darkmode
 }
