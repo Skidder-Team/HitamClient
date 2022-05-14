@@ -1,13 +1,13 @@
 [
   {
-    "modid": "fdpclient",
-    "name": "FDPClient",
+    "modid": "hitamclient",
+    "name": "HitamClient",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://fdpclient.club",
+    "url": "https://hitam.client",
     "updateUrl": "",
-    "authorList": ["CCBlueX", "UnlegitMC"],
+    "authorList": ["Necro", "Liep_"],
     "credits": "",
     "logoFile": "",
     "screenshots": [],

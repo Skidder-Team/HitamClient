@@ -7,7 +7,7 @@ public class FDPProtectManager {
     static {
         instance = new FDPProtectManager();
     }
-    public String VerifyText="Can't load FDPProtect, You can try restart client (Insecure Version)";
+    public String VerifyText= "Can't load HitamProtect, You can try restart client (Insecure Version)";
     public static FDPProtectManager getInstance(){
         return instance;
     }

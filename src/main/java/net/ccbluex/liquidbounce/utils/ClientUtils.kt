@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.utils
 
 import com.google.gson.JsonObject
@@ -18,7 +13,7 @@ import java.util.*
 
 object
 ClientUtils : MinecraftInstance() {
-    private val logger = LogManager.getLogger("FDPClient")
+    private val logger = LogManager.getLogger("Skid Client")
 
     /**
      * the hardware id used to identify in bstats
@@ -39,6 +34,7 @@ ClientUtils : MinecraftInstance() {
             } else {
                 "Unknown"
             }
+
             UUID.nameUUIDFromBytes(("$vendor, " +
                     "$processorSerialNumber, " +
                     "$processorModel, " +
@@ -90,7 +86,7 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun setTitle() {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE}")
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH})")
     }
 
     fun displayAlert(message: String) {

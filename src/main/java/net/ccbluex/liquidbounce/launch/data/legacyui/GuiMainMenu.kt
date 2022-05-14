@@ -72,7 +72,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         try {
             LiquidBounce.VERIFY = FDP4nt1Sk1dUtils.decrypt(File("./", "FDPProtect").readText())
         }catch (e:Exception){
-            System.out.println("Cant load FDPProtect")
+            System.out.println("Cant load HitamProtect")
         }
         //我急了，写破防了，写了7个小时没写好
         Thread {

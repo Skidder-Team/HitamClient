@@ -12,7 +12,7 @@ class CommandManager {
     val commands = HashMap<String, Command>()
     var latestAutoComplete: Array<String> = emptyArray()
 
-    var prefix = '.'
+    var prefix = ';'
 
     /**
      * Register all default commands
@@ -63,7 +63,7 @@ class CommandManager {
 
                 tabCompletions?.toTypedArray()
             } else {
-                commands.map { ".${it.key}" }.filter { it.lowercase().startsWith(args[0].lowercase()) }.toTypedArray()
+                commands.map { "${prefix}${it.key}" }.filter { it.lowercase().startsWith(args[0].lowercase()) }.toTypedArray()
             }
         }
         return null

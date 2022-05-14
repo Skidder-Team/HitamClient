@@ -41,18 +41,19 @@ object LiquidBounce {
 
 
     // Client information
-    const val CLIENT_NAME = "FDPClient"
+    const val CLIENT_NAME = "Hitam Client"
+    const val CLIENT_NAME_NOSPACE = "HitamClient"
     @JvmStatic
-    var VERIFY = "Can't load FDPProtect, You can try restart client (Insecure Version)"
+    var VERIFY = "Can't load HitamProtect, You can try restart client (Insecure Version)"
     var CLIENTTEXT = "Waiting..."
     var Darkmode = true
-    const val COLORED_NAME = "§c§lFDP§6§lClient"
-    const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"
-    const val CLIENT_WEBSITE = "FDPClient.Club"
+    const val COLORED_NAME = "§b§lHitamClient"
+    const val CLIENT_CREATOR = "Skid Development (Necro, JektDV , Liep_, Walter, AviMuh, Cavry)"
+    const val CLIENT_WEBSITE = "hitam.client"
     val venti = ResourceLocation("fdpclient/imgs/GenshinImpact/venti.png")
     val lumine = ResourceLocation("fdpclient/imgs/GenshinImpact/lumine.png")
     const val MINECRAFT_VERSION = "1.8.9"
-    const val VERSIONTYPE = "Preview"
+    const val VERSIONTYPE = "development"
     @JvmField
     val gitInfo = Properties().also {
         val inputStream = LiquidBounce::class.java.classLoader.getResourceAsStream("git.properties")
@@ -68,8 +69,10 @@ object LiquidBounce {
     val CLIENT_VERSION = gitInfo["git.commit.id.abbrev"]?.let { "git-$it" } ?: "unknown"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
-        if(it == "main") "Main Reborn" else it
+        if(it == "main") "dev" else it
     }
+    @JvmField
+    val CLIENT_COMMIT_ID = gitInfo["git.commit.id.abbrev"]
 
     var isStarting = true
     var isLoadingConfig = true
@@ -189,9 +192,11 @@ object LiquidBounce {
         }
 
         // run update checker
+        /*
         if(CLIENT_VERSION != "unknown") {
             thread(block = this::checkUpdate)
         }
+        */
 
         ClientUtils.logInfo("$CLIENT_NAME $CLIENT_VERSION loaded in ${(System.currentTimeMillis() - startTime)}ms!")
     }
