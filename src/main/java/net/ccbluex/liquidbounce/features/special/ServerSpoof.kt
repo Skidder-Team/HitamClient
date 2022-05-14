@@ -7,7 +7,7 @@ import net.minecraft.network.handshake.client.C00Handshake
 
 object ServerSpoof : Listenable {
     var enable = false
-    var address = "cavrynet.work"
+    var address = "redesky.com"
 
     @EventTarget
     fun onPacket(event: PacketEvent) {

@@ -12,7 +12,7 @@ import java.io.File
 import java.net.Proxy
 
 class SpecialConfig(file: File) : FileConfig(file) {
-    var useGlyphFontRenderer = false
+    var useGlyphFontRenderer = true
 
     override fun loadConfig(config: String) {
         val json = JsonParser().parse(config).asJsonObject
@@ -27,8 +27,8 @@ class SpecialConfig(file: File) : FileConfig(file) {
         ServerSpoof.address = "redesky.com"
         GuiBackground.enabled = true
         GuiBackground.particles = false
-        GuiAltManager.randomAltField.text = "HITAM_%n%n%n%s"
-        useGlyphFontRenderer = false
+        GuiAltManager.randomAltField.text = "F%nD%nP%n_%s%s%s"
+        useGlyphFontRenderer = true
         ProxyManager.isEnable = false
         ProxyManager.proxy = "127.0.0.1:10808"
         ProxyManager.proxyType = Proxy.Type.SOCKS

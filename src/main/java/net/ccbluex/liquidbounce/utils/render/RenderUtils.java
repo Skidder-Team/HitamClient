@@ -7,6 +7,7 @@ package net.ccbluex.liquidbounce.utils.render;
 
 import net.ccbluex.liquidbounce.injection.access.StaticStorage;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
+import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.MathUtils;
 import net.ccbluex.liquidbounce.utils.MinecraftInstance;
 import net.ccbluex.liquidbounce.utils.block.BlockUtils;
@@ -26,6 +27,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Timer;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.GLUtessellator;
 import org.lwjgl.util.glu.GLUtessellatorCallbackAdapter;
@@ -43,7 +45,7 @@ import static java.lang.Math.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class RenderUtils extends MinecraftInstance {
-    private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
+    private static final Map<String, Map<Integer, Boolean>> glCapMap = new HashMap<>();
 
     public static int deltaTime;
 
@@ -172,6 +174,20 @@ public final class RenderUtils extends MinecraftInstance {
         for(int i = end; i >= start; i -= split) {
             glVertex2d(x + Math.sin(i * Math.PI / 180.0D) * xRadius, y + Math.cos(i * Math.PI / 180.0D) * yRadius);
         }
+    }
+
+    public static void drawTexturedModalRect(int x, int y, int textureX, int textureY, int width, int height, float zLevel)
+    {
+        float f = 0.00390625F;
+        float f1 = 0.00390625F;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos((double)(x + 0), (double)(y + height), (double)zLevel).tex((double)((float)(textureX + 0) * f), (double)((float)(textureY + height) * f1)).endVertex();
+        worldrenderer.pos((double)(x + width), (double)(y + height), (double)zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + height) * f1)).endVertex();
+        worldrenderer.pos((double)(x + width), (double)(y + 0), (double)zLevel).tex((double)((float)(textureX + width) * f), (double)((float)(textureY + 0) * f1)).endVertex();
+        worldrenderer.pos((double)(x + 0), (double)(y + 0), (double)zLevel).tex((double)((float)(textureX + 0) * f), (double)((float)(textureY + 0) * f1)).endVertex();
+        tessellator.draw();
     }
 
     public static void drawRoundedCornerRect(float x, float y, float x1, float y1, float radius, int color) {
@@ -531,7 +547,9 @@ public final class RenderUtils extends MinecraftInstance {
     public static void drawRect(final float x, final float y, final float x2, final float y2, final Color color) {
         drawRect(x, y, x2, y2, color.getRGB());
     }
-
+    public static void drawBorderedRect(final double x, final double y, final double x2, final double y2, final double width, final int color1, final int color2) {
+        drawBorderedRect((float)x,(float)y,(float)x2,(float)y2,(float)width,color1,color2);
+    }
     public static void drawBorderedRect(final float x, final float y, final float x2, final float y2, final float width, final int color1, final int color2) {
         drawRect(x, y, x2, y2, color2);
         glEnable(GL_BLEND);
@@ -827,36 +845,73 @@ public final class RenderUtils extends MinecraftInstance {
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
 
+    public static void resetCaps(final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            return;
+        }
+        Map<Integer, Boolean> map = glCapMap.get(scale);
+        map.forEach(RenderUtils::setGlState);
+        map.clear();
+    }
+
     public static void resetCaps() {
-        glCapMap.forEach(RenderUtils::setGlState);
-        glCapMap.clear();
+        resetCaps("COMMON");
+    }
+
+    public static void clearCaps(final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            return;
+        }
+        Map<Integer, Boolean> map = glCapMap.get(scale);
+        if(!map.isEmpty()) {
+            ClientUtils.INSTANCE.logWarn("Cap map is not empty! [" + map.size() + "]");
+        }
+        map.clear();
     }
 
     public static void clearCaps() {
-        glCapMap.clear();
+        clearCaps("COMMON");
+    }
+
+    public static void enableGlCap(final int cap, final String scale) {
+        setGlCap(cap, true, scale);
     }
 
     public static void enableGlCap(final int cap) {
-        setGlCap(cap, true);
+        enableGlCap(cap, "COMMON");
     }
 
-    public static void enableGlCap(final int... caps) {
-        for (final int cap : caps)
-            setGlCap(cap, true);
+    public static void disableGlCap(final int cap, final String scale) {
+        setGlCap(cap, false, scale);
     }
 
     public static void disableGlCap(final int cap) {
-        setGlCap(cap, false);
+        disableGlCap(cap, "COMMON");
+    }
+
+
+    public static void enableGlCap(final int... caps) {
+        for(int cap : caps) {
+            setGlCap(cap, true, "COMMON");
+        }
     }
 
     public static void disableGlCap(final int... caps) {
-        for (final int cap : caps)
-            setGlCap(cap, false);
+        for(int cap : caps) {
+            setGlCap(cap, false, "COMMON");
+        }
+    }
+
+    public static void setGlCap(final int cap, final boolean state, final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            glCapMap.put(scale, new HashMap<>());
+        }
+        glCapMap.get(scale).put(cap, glGetBoolean(cap));
+        setGlState(cap, state);
     }
 
     public static void setGlCap(final int cap, final boolean state) {
-        glCapMap.put(cap, glGetBoolean(cap));
-        setGlState(cap, state);
+        setGlCap(cap, state, "COMMON");
     }
 
     public static void setGlState(final int cap, final boolean state) {

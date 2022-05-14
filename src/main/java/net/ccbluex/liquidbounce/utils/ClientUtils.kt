@@ -18,7 +18,7 @@ import java.util.*
 
 object
 ClientUtils : MinecraftInstance() {
-    private val logger = LogManager.getLogger("Skid Client")
+    private val logger = LogManager.getLogger("FDPClient")
 
     /**
      * the hardware id used to identify in bstats
@@ -39,7 +39,6 @@ ClientUtils : MinecraftInstance() {
             } else {
                 "Unknown"
             }
-
             UUID.nameUUIDFromBytes(("$vendor, " +
                     "$processorSerialNumber, " +
                     "$processorModel, " +
@@ -91,7 +90,7 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun setTitle() {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH})")
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE}")
     }
 
     fun displayAlert(message: String) {

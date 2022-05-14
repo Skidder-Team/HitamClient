@@ -39,6 +39,7 @@ object HUD : Module() {
     val chatRectValue = BoolValue("ChatRect", true)
     val chatCombineValue = BoolValue("ChatCombine", true)
     val chatAnimValue = BoolValue("ChatAnimation", true)
+    val genshinImpactAnim = BoolValue("Genshin Impact", false)
     val rainbowStartValue = FloatValue("RainbowStart", 0.41f, 0f, 1f)
     val rainbowStopValue = FloatValue("RainbowStop", 0.58f, 0f, 1f)
     val rainbowSaturationValue = FloatValue("RainbowSaturation", 0.7f, 0f, 1f)
@@ -51,7 +52,7 @@ object HUD : Module() {
     val arraylistYAxisAnimTypeValue = EaseUtils.getEnumEasingList("ArraylistYAxisAnimType")
     val arraylistYAxisAnimOrderValue = EaseUtils.getEnumEasingOrderList("ArraylistYAxisHotbarAnimOrder")
     val fontEpsilonValue = FloatValue("FontVectorEpsilon", 0.5f, 0f, 1.5f)
-    private val buttonValue = ListValue("Button", arrayOf("FLine", "Rounded", "Rise", "Vanilla"), "FLine")
+    private val buttonValue = ListValue("Button", arrayOf("Better","FLine", "Rise", "Vanilla"), "Better")
 
     private var lastFontEpsilon = 0f
 
@@ -118,8 +119,8 @@ object HUD : Module() {
 
     fun getButtonRenderer(button: GuiButton): AbstractButtonRenderer? {
         return when (buttonValue.get().lowercase()) {
+            "better" -> RoundedButtonRenderer(button)
             "fline" -> FLineButtonRenderer(button)
-            "rounded" -> RoundedButtonRenderer(button)
             "rise" -> RiseButtonRenderer(button)
             else -> null // vanilla or unknown
         }

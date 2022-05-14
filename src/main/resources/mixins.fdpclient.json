@@ -30,9 +30,11 @@
     "gui.MixinGuiInGame",
     "gui.MixinGuiIngameMenu",
     "gui.MixinGuiMultiplayer",
+    "gui.MixinServerListEntryNormal",
     "gui.MixinGuiNewChat",
     "gui.MixinGuiScreen",
     "gui.MixinGuiSpectator",
+    "gui.MixinGuiTextField",
     "network.MixinC00Handshake",
     "network.MixinNetHandlerPlayClient",
     "network.MixinNetworkManager",
@@ -53,9 +55,7 @@
     "render.MixinTileEntityItemStackRenderer",
     "render.MixinTileEntityMobSpawnerRenderer",
     "render.MixinTileEntityRendererDispatcher",
-    "render.MixinVisGraph",
-    "splash.MixinSplashProgress",
-    "splash.MixinSplashProgressRunnable"
+    "render.MixinVisGraph"
   ],
   "client": [
     "gui.MixinGui",

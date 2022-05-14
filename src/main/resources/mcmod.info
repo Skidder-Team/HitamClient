@@ -1,13 +1,13 @@
 [
   {
-    "modid": "hitamclient",
-    "name": "HitamClient",
+    "modid": "fdpclient",
+    "name": "FDPClient",
     "description": "",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://skid.client",
+    "url": "https://fdpclient.club",
     "updateUrl": "",
-    "authorList": ["Necro", "JektDV", "Liep_", "Walter", "AviMuh"],
+    "authorList": ["CCBlueX", "UnlegitMC"],
     "credits": "",
     "logoFile": "",
     "screenshots": [],
