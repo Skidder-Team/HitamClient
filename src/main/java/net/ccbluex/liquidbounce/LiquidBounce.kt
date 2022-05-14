@@ -82,7 +82,6 @@ object LiquidBounce {
     // Managers
     lateinit var moduleManager: ModuleManager
     @JvmStatic
-    var fdpProtectManager = FDPProtectManager()
     lateinit var commandManager: CommandManager
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager

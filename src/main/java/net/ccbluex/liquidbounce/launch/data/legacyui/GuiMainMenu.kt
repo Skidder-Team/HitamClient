@@ -12,7 +12,6 @@ import net.ccbluex.liquidbounce.ui.btn.TestBtn
 import net.ccbluex.liquidbounce.ui.client.GuiBackground
 import net.ccbluex.liquidbounce.ui.client.altmanager.GuiAltManager
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
-import net.ccbluex.liquidbounce.utils.FDP4nt1Sk1dUtils
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils
 import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
@@ -69,11 +68,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     /* For modification, please keep "Designed by XiGua" */
     override fun initGui() {
         val defaultHeight = (this.height / 3.5).toInt()
-        try {
-            LiquidBounce.VERIFY = FDP4nt1Sk1dUtils.decrypt(File("./", "FDPProtect").readText())
-        }catch (e:Exception){
-            System.out.println("Cant load HitamProtect")
-        }
         //我急了，写破防了，写了7个小时没写好
         Thread {
             if(LiquidBounce.CLIENTTEXT.contains("Waiting") || LiquidBounce.CLIENTTEXT.contains("Oops")) {
@@ -118,7 +112,6 @@ override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
     FontLoaders.F40.drawCenteredString(LiquidBounce.CLIENT_NAME,this.width.toDouble()/2,this.height.toDouble()/2 - 60,Color(255,255,255,200).rgb)
     
     /* For modification, please keep "Designed by XiGua" */
-    //FDPProtect.setVerify("1")
 
     FontLoaders.F16.drawString("Made by UnlegitMC Team & Designed by XiGua",10f,this.height-15f,Color(255,255,255,170).rgb)
     FontLoaders.F16.drawString(LiquidBounce.VERIFY,10f,this.height-25f,if(LiquidBounce.VERIFY.contains("Insecure")) Color(255,58,58,170).rgb else Color(255,255,255,170).rgb)

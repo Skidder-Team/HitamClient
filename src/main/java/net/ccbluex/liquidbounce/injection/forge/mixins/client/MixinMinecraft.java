@@ -12,7 +12,6 @@ import net.ccbluex.liquidbounce.features.module.modules.client.Modules;
 import net.ccbluex.liquidbounce.features.module.modules.client.Rotations;
 import net.ccbluex.liquidbounce.features.module.modules.combat.AutoClicker;
 import net.ccbluex.liquidbounce.features.module.modules.world.FastPlace;
-import net.ccbluex.liquidbounce.features.special.FDPProtectManager;
 import net.ccbluex.liquidbounce.injection.access.StaticStorage;
 import net.ccbluex.liquidbounce.utils.*;
 import net.ccbluex.liquidbounce.utils.misc.MiscUtils;
@@ -114,16 +113,13 @@ public abstract class MixinMinecraft {
             throw new AccessDeniedException(warnStr);
         }
         LiquidBounce.INSTANCE.initClient();
-        LiquidBounce.setFdpProtectManager(new FDPProtectManager());
         //QQUtils.getQQ();
         System.out.println("Loaded FDP");
     }
     @Inject(method = "createDisplay", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/Display;setTitle(Ljava/lang/String;)V", shift = At.Shift.AFTER))
     private void createDisplay(CallbackInfo callbackInfo) {
-        File file =new File("./", "FDPProtect");
         file.delete();
         ClientUtils.INSTANCE.setTitle();
-        FDPProtectUtils.load(0);
     }
 
     @Inject(method = "displayGuiScreen", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", shift = At.Shift.AFTER))
@@ -201,12 +197,6 @@ public abstract class MixinMinecraft {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FDP4nt1Sk1dUtils.showTisp("FDPProtect","Your game has encountered a fatal error, if it persists, please save your error log and send it to the developers!", TrayIcon.MessageType.ERROR,5000L);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 JOptionPane.showMessageDialog(
                         null,"Troubleshooting any problem without the error log is like driving with your eyes closed.","From Apache",
                         JOptionPane.INFORMATION_MESSAGE
@@ -218,19 +208,6 @@ public abstract class MixinMinecraft {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        FDPProtectUtils.LoadFileNoEncrypt("FDPCrashLogs.txt",
-                "##########################FDPPROTECT CRASH REPORT##########################\r\n\r\n" +
-                "If this problem persists, please send this file to the FDPClient developers! Website (where you can join the discord server): http://FDPClient.Club/\r\nThis file will be saved in \".minecraft/FDPCrashLogs.txt\"" +
-                "\r\n\r\n" +
-                " | 在没有错误日志的情况下诊断任何问题无异于闭眼开车!  --Apache官方文档\r\n" +
-                " | Troubleshooting any problem without the error log is like driving with your eyes closed.\r\n" +
-                " | From Apache official documentation Getting Started chapter\r\n" +
-                "   - INFO:\r\n" +
-                "   |   HWID: "+HWIDUtils.getHWID()+"\r\n" +
-                "   |   Version: "+LiquidBounce.CLIENT_VERSION+"\r\n" +
-                "   |   Time: "+System.currentTimeMillis()+"\r\n" +
-                "   |   OS: "+Util.getOSType()+"\r\n" +
-                "\r\n##########################FDPPROTECT CRASH REPORT##########################\r\n"+crashReport.getCompleteReport());
         File file1 = new File("./", "FDPCrashLogs.txt");;
         String s = file1.getAbsolutePath();
 
