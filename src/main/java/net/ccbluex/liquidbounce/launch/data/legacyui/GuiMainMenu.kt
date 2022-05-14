@@ -72,10 +72,10 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         Thread {
             if(LiquidBounce.CLIENTTEXT.contains("Waiting") || LiquidBounce.CLIENTTEXT.contains("Oops")) {
                 try {
-                    LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT$Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
+                    LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT#Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
                 } catch (e: Exception) {
                     try {
-                        LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT$Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
+                        LiquidBounce.CLIENTTEXT = "ANNOUNCEMENT#Latest version: v2.0.0 | Your version: ${LiquidBounce.CLIENT_VERSION}#[+] Better HUD#[+] New ClickGui#[+] StaffDetector (Anti Ban for BlocksMC)#[+] Background Setting(Add Blur)#[+] Hot Update(Auto Update)#[+] Fix Crash bugs / Add Crashed Report#[+] Vulcan Bypass#[+] And more$300$150"
                     } catch (e: Exception) {
                         LiquidBounce.CLIENTTEXT = "Oops.. :(\$Can't get information!#Try reopen the main menu\$140\$80"
                     }
