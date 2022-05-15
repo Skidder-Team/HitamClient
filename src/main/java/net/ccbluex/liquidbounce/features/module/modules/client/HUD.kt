@@ -29,7 +29,7 @@ import net.minecraft.util.ResourceLocation
 object HUD : Module() {
     val betterHotbarValue = BoolValue("BetterHotbar", true)
     val hotbarAlphaValue = IntegerValue("HotbarAlpha", 70, 0, 255).displayable { betterHotbarValue.get() }
-    val hotbarEaseValue = BoolValue("HotbarEase", true)
+    val hotbarEaseValue = BoolValue("HotbarEase", false)
     private val hotbarAnimSpeedValue = IntegerValue("HotbarAnimSpeed", 10, 5, 20).displayable { hotbarEaseValue.get() }
     private val hotbarAnimTypeValue = EaseUtils.getEnumEasingList("HotbarAnimType").displayable { hotbarEaseValue.get() }
     private val hotbarAnimOrderValue = EaseUtils.getEnumEasingOrderList("HotbarAnimOrder").displayable { hotbarEaseValue.get() }
@@ -52,7 +52,7 @@ object HUD : Module() {
     val arraylistYAxisAnimTypeValue = EaseUtils.getEnumEasingList("ArraylistYAxisAnimType")
     val arraylistYAxisAnimOrderValue = EaseUtils.getEnumEasingOrderList("ArraylistYAxisHotbarAnimOrder")
     val fontEpsilonValue = FloatValue("FontVectorEpsilon", 0.5f, 0f, 1.5f)
-    private val buttonValue = ListValue("Button", arrayOf("Better","FLine", "Rise", "Vanilla"), "Better")
+    private val buttonValue = ListValue("Button", arrayOf("Better","FLine", "Rise", "Vanilla"), "Rise")
 
     private var lastFontEpsilon = 0f
 
@@ -84,7 +84,7 @@ object HUD : Module() {
         LiquidBounce.hud.update()
         if(mc.currentScreen == null && lastFontEpsilon != fontEpsilonValue.get()) {
             lastFontEpsilon = fontEpsilonValue.get()
-            alert("You need to reload FDPClient to apply changes!")
+            alert("You need to reload HitamClient to apply changes!")
         }
     }
 

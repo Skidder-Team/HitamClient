@@ -41,7 +41,7 @@ object DiscordRPC {
     private fun update() {
         val builder = RichPresence.Builder()
         builder.setStartTimestamp(timestamp)
-        builder.setLargeImage("epep", "Hitam Client b${LiquidBounce.CLIENT_COMMIT_ID} by Necro")
+        builder.setLargeImage("epep", "build ${LiquidBounce.CLIENT_COMMIT_ID} by Necro")
         builder.setDetails("Playing Hitam Client ${LiquidBounce.MINECRAFT_VERSION}")
         ServerUtils.getRemoteIp().also {
             builder.setState(if(it.equals("idling", true)) "Currently not skidding" else "Skidding on $it ")
