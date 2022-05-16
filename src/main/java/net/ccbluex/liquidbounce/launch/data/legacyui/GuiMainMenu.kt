@@ -17,6 +17,7 @@ import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.minecraft.client.gui.*
 import net.minecraft.client.resources.I18n
+import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.GuiModList
 import java.awt.Color
@@ -76,7 +77,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         
         GL11.glTranslatef(xDelta * strength, yDelta * strength, 0F)
     }
-    
+
     /* For modification, please keep "Designed by XiGua" */
     override fun initGui() {
         val defaultHeight = (this.height / 3.5).toInt()
