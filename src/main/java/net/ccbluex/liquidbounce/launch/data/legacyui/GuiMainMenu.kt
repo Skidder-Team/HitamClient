@@ -63,8 +63,20 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         this.buttonList.add(TestBtn(191, 20, 10, 25, 25, "Change exterior", ResourceLocation("fdpclient/imgs/icon/moon-night.png"), 2,
             Color(20, 20, 20, 130)))
 
+        moveMouseEffect(mouseX, mouseY, 10F)
+
         drawed=true;
     }
+
+    fun moveMouseEffect(mouseX: Int, mouseY: Int, strength: Float) {
+        val mX = mouseX - width / 2
+        val mY = mouseY - height / 2
+        val xDelta = mX.toFloat() / (width / 2).toFloat()
+        val yDelta = mY.toFloat() / (height / 2).toFloat()
+        
+        GL11.glTranslatef(xDelta * strength, yDelta * strength, 0F)
+    }
+    
     /* For modification, please keep "Designed by XiGua" */
     override fun initGui() {
         val defaultHeight = (this.height / 3.5).toInt()
