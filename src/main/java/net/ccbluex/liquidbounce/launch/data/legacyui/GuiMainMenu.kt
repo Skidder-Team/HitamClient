@@ -28,7 +28,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     var drawed=false;
     var clicked=false;
     var displayed=false;
-    fun drawBtns(mouseX: Int, mouseY: Int){
+    fun drawBtns(){
         this.buttonList.add(TestBtn(1, (this.width / 2) - (130 / 2), this.height / 2 - 20, 130, 23,  I18n.format("menu.singleplayer"), null, 2,
             Color(20, 20, 20, 130)))
 
@@ -64,8 +64,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         this.buttonList.add(TestBtn(191, 20, 10, 25, 25, "Change exterior", ResourceLocation("fdpclient/imgs/icon/moon-night.png"), 2,
             Color(20, 20, 20, 130)))
-
-        moveMouseEffect(mouseX, mouseY, 10F)
 
         drawed=true;
     }
@@ -130,6 +128,7 @@ override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
     FontLoaders.F16.drawString("Made by Skid Development (Skidder Team)",10f,this.height-15f,Color(255,255,255,170).rgb)
     var versionMsg="Version: "+LiquidBounce.CLIENT_VERSION+if (LiquidBounce.VERSIONTYPE.contains("Release")) " | Release" else " | " + LiquidBounce.VERSIONTYPE
     FontLoaders.F16.drawString(versionMsg,this.width - FontLoaders.F16.getStringWidth(versionMsg) - 10F,this.height-15f,Color(255,255,255,170).rgb)
+    moveMouseEffect(mouseX, mouseY, 10F)
 
     //
     /*val bHeight = (this.height / 3.5).toInt()
