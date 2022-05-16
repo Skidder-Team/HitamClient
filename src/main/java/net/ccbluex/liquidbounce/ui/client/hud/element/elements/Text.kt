@@ -48,7 +48,7 @@ class Text(
         val DECIMAL_FORMAT = DecimalFormat("#.##")
     }
 
-    val displayString = TextValue("DisplayText", "")
+    val displayString = TextValue("DisplayText", "Hitam Client v2.0.0 | %fps% fps | %ping%ms")
     private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 255, 0, 255)
     private val blueValue = IntegerValue("Blue", 255, 0, 255)
@@ -145,7 +145,7 @@ class Text(
         return result.toString()
     }
     fun getClientName(i: Int,i2: Int): String{
-        return "FDPClient".substring(i,i2);
+        return "HitamClient".substring(i,i2);
     }
     /**
      * Draw element
@@ -199,14 +199,14 @@ class Text(
                 getClientName(0,3), 5F, 0F,Color(255,255,255,180).rgb
             )
             FontLoaders.C16.drawString(
-                getClientName(3,9), 5F + FontLoaders.F40.getStringWidth("FDP"), 13F,Color(255,255,255,180).rgb
+                getClientName(3,9), 5F + FontLoaders.F40.getStringWidth("Hitam"), 13F,Color(255,255,255,180).rgb
             )
             RenderUtils.drawRect(5f,22.5f,70f,22.8f,Color(200,200,200,120).rgb)
             FontLoaders.C14.drawString(
-                LiquidBounce.CLIENT_VERSION + " | "+LiquidBounce.VERSIONTYPE, 5F, 27F,Color(255,255,255,180).rgb
+                LiquidBounce.CLIENT_VERSION + " | "+ LiquidBounce.VERSIONTYPE, 5F, 27F,Color(255,255,255,180).rgb
             )
             FontLoaders.C14.drawString(
-                "REBORN 2022", 5F, 37F,Color(255,255,255,180).rgb
+                "by Necro", 5F, 37F,Color(255,255,255,180).rgb
             )
         }
 
