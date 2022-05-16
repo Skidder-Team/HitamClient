@@ -22,12 +22,13 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.GuiModList
 import java.awt.Color
 import java.io.File
+import org.lwjgl.opengl.GL11
 
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     var drawed=false;
     var clicked=false;
     var displayed=false;
-    fun drawBtns(){
+    fun drawBtns(mouseX: Int, mouseY: Int){
         this.buttonList.add(TestBtn(1, (this.width / 2) - (130 / 2), this.height / 2 - 20, 130, 23,  I18n.format("menu.singleplayer"), null, 2,
             Color(20, 20, 20, 130)))
 
