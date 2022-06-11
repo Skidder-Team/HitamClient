@@ -41,11 +41,10 @@ object DiscordRPC {
     private fun update() {
         val builder = RichPresence.Builder()
         builder.setStartTimestamp(timestamp)
-        builder.setLargeImage("epep", "Hitam Client (FDPClient's fork) build ${LiquidBounce.CLIENT_COMMIT_ID}")
-        builder.setSmallImage("necro", "Necro's shitcode edition")
+        builder.setLargeImage("epep", "Hitam Client build ${LiquidBounce.CLIENT_COMMIT_ID}")
         builder.setDetails("Playing Hitam Client ${LiquidBounce.MINECRAFT_VERSION}")
         ServerUtils.getRemoteIp().also {
-            builder.setState(if(it.equals("idling", true)) "Currently not skidding" else "Skidding on $it ")
+            builder.setState(if(it.equals("idling", true)) "Currently not playing anything" else "Playing Yo ndak tau :uu :vvvosss 🗿") // $it
         }
 
         // Check ipc client is connected and send rpc
