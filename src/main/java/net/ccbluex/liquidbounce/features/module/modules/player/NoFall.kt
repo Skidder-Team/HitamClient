@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.features.module.modules.player
 
 import net.ccbluex.liquidbounce.LiquidBounce
@@ -83,6 +78,8 @@ class NoFall : Module() {
     private var matrixSend = false
     private var nextSpoof = false
     private var doSpoof = false
+    private var vulCantNoFall = true
+    private var vulCanNoFall = false
 
     override fun onEnable() {
         nextSpoof = false
@@ -130,6 +127,12 @@ class NoFall : Module() {
             wasTimer = false
         }
     }
+    
+    @EventTarget
+    fun onWorld(event: WorldEvent) {
+        vulCantNoFall = true
+        vulCanNoFall = false
+    }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
@@ -164,6 +167,12 @@ class NoFall : Module() {
         }
 
         when (modeValue.get().lowercase()) {
+            "medusa" -> {
+                if (mc.thePlayer.fallDistance > 2.5) {
+                    needSpoof = true
+                    mc.thePlayer.fallDistance = 0f
+                }
+            }
             "packet" -> {
                 if (mc.thePlayer.fallDistance - mc.thePlayer.motionY > 3f){
                     mc.netHandler.addToSendQueue(C03PacketPlayer(true))
@@ -386,12 +395,22 @@ class NoFall : Module() {
                 }
             }
             "vulcan" -> {
+                if(!vulCanNoFall && mc.thePlayer.fallDistance > 3.25) {
+                    vulCanNoFall = true
+                }
+                if(vulCanNoFall && mc.thePlayer.onGround && vulCantNoFall) {
+                    vulCantNoFall = false
+                }
+                if(vulCantNoFall) {
+                    return //Vulcan Antihake
+                }
                 if(nextSpoof) {
                     mc.thePlayer.motionY = -0.1
-                    MovementUtils.strafe(0.343f)
+                    mc.thePlayer.fallDistance = -0.1f
+                    MovementUtils.strafe(0.3f)
                     nextSpoof = false
                 }
-                if(mc.thePlayer.fallDistance > 3.65) {
+                if(mc.thePlayer.fallDistance > 3.5625f) {
                     mc.thePlayer.fallDistance = 0.0f
                     doSpoof = true
                     nextSpoof = true
@@ -438,29 +457,23 @@ class NoFall : Module() {
         } else if (modeValue.equals("MLG")) {
             if (event.eventState == EventState.PRE) {
                 currentMlgRotation = null
-
                 mlgTimer.update()
 
-                if (!mlgTimer.hasTimePassed(10)) {
+                if (!mlgTimer.hasTimePassed(10)) 
                     return
-                }
+                
 
                 if (mc.thePlayer.fallDistance > minFallDistanceValue.get()) {
                     val fallingPlayer = FallingPlayer(mc.thePlayer)
-
                     val maxDist = mc.playerController.blockReachDistance + 1.5
-
                     val collision = fallingPlayer.findCollision(ceil(1.0 / mc.thePlayer.motionY * -maxDist).toInt()) ?: return
-
                     var ok = Vec3(mc.thePlayer.posX, mc.thePlayer.posY + mc.thePlayer.eyeHeight, mc.thePlayer.posZ).distanceTo(Vec3(collision).addVector(0.5, 0.5, 0.5)) < mc.playerController.blockReachDistance + sqrt(0.75)
 
-                    if (mc.thePlayer.motionY < collision.y + 1 - mc.thePlayer.posY) {
+                    if (mc.thePlayer.motionY < collision.y + 1 - mc.thePlayer.posY) 
                         ok = true
-                    }
 
-                    if (!ok) {
+                    if (!ok) 
                         return
-                    }
 
                     var index = -1
 
@@ -470,14 +483,13 @@ class NoFall : Module() {
                         if (itemStack != null && (itemStack.item == Items.water_bucket || itemStack.item is ItemBlock && (itemStack.item as ItemBlock).block == Blocks.web)) {
                             index = i - 36
 
-                            if (mc.thePlayer.inventory.currentItem == index) {
+                            if (mc.thePlayer.inventory.currentItem == index)
                                 break
                             }
                         }
-                    }
-                    if (index == -1) {
+                    
+                    if (index == -1) 
                         return
-                    }
 
                     currentMlgItemIndex = index
                     currentMlgBlock = collision
@@ -492,19 +504,16 @@ class NoFall : Module() {
             } else if (currentMlgRotation != null) {
                 val stack = mc.thePlayer.inventory.mainInventory[currentMlgItemIndex]
 
-                if (stack.item is ItemBucket) {
+                if (stack.item is ItemBucket) 
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, stack)
-                } else {
-                    if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, stack, currentMlgBlock, EnumFacing.UP, Vec3(0.0,0.0,0.0))) {
+                 else if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, stack, currentMlgBlock, EnumFacing.UP, Vec3(0.0,0.5,0.0).add(Vec3(currentMlgBlock ?: return))))
                         mlgTimer.reset()
-                    }
-                }
-                if (mc.thePlayer.inventory.currentItem != currentMlgItemIndex) {
+
+                if (mc.thePlayer.inventory.currentItem != currentMlgItemIndex)
                     mc.thePlayer.sendQueue.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
                 }
             }
         }
-    }
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
@@ -596,10 +605,9 @@ class NoFall : Module() {
                     mc.timer.timerSpeed = 0.18f
                 }
             } else if(mode.equals("Medusa", true)) {
-                if(mc.thePlayer.fallDistance > 2.3f) {
-                    event.cancelEvent()
-                    PacketUtils.sendPacketNoEvent(C03PacketPlayer(true))
-                    mc.thePlayer.fallDistance = 0.0f
+                if (needSpoof) {
+                    packet.onGround = true
+                    needSpoof = false
                 }
             }
         }

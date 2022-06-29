@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.features.module.modules.combat
 
 import net.ccbluex.liquidbounce.event.EventTarget
@@ -15,16 +10,19 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.EntityUtils
 import net.ccbluex.liquidbounce.utils.PathUtils
 import net.ccbluex.liquidbounce.utils.RaycastUtils
+import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
+import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.network.play.client.C03PacketPlayer
-import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.entity.player.PlayerCapabilities
+import net.minecraft.network.play.client.*
+import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
@@ -40,6 +38,7 @@ class InfiniteAura : Module() {
     private val distValue = IntegerValue("Distance", 30, 20, 100)
     private val moveDistanceValue = FloatValue("MoveDistance", 5F, 2F, 15F)
     private val noRegenValue = BoolValue("NoRegen", true)
+    private val noLagBackValue = BoolValue("NoLagback", true)
     private val swingValue = BoolValue("Swing", true).displayable { modeValue.equals("Aura") }
     private val pathRenderValue = BoolValue("PathRender", true)
     private val colorRedValue = IntegerValue("ColorRed", 0, 0, 255).displayable { pathRenderValue.get() && !colorRainbowValue.get() }
@@ -154,6 +153,19 @@ class InfiniteAura : Module() {
         if (noRegenValue.get() && event.packet is C03PacketPlayer && !isMovePacket) {
             event.cancelEvent()
         }
+        if (noLagBackValue.get() && event.packet is S08PacketPlayerPosLook) {
+            val capabilities = PlayerCapabilities()
+            capabilities.allowFlying = true
+            mc.netHandler.addToSendQueue(C13PacketPlayerAbilities(capabilities)) // Packet C13
+                    
+            val x = event.packet.getX() - mc.thePlayer.posX
+            val y = event.packet.getY() - mc.thePlayer.posY
+            val z = event.packet.getZ() - mc.thePlayer.posZ
+            val diff = Math.sqrt(x * x + y * y + z * z)
+            event.cancelEvent() // cancel
+            PacketUtils.sendPacketNoEvent(C06PacketPlayerPosLook(event.packet.getX(), event.packet.getY(), event.packet.getZ(), event.packet.getYaw(), event.packet.getPitch(), true))
+                        
+        }
     }
 
     @EventTarget
@@ -224,7 +236,4 @@ class InfiniteAura : Module() {
             GL11.glColor4f(1F, 1F, 1F, 1F)
         }
     }
-
-    override val tag: String
-        get() = modeValue.get() + if (thread?.isAlive == true) "!" else ""
 }

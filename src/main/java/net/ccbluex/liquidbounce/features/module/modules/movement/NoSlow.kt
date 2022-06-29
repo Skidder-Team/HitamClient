@@ -1,4 +1,3 @@
-
 package net.ccbluex.liquidbounce.features.module.modules.movement
 
 import net.ccbluex.liquidbounce.LiquidBounce
@@ -28,7 +27,7 @@ import kotlin.math.sqrt
 
 @ModuleInfo(name = "NoSlow", category = ModuleCategory.MOVEMENT)
 class NoSlow : Module() {
-    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "LiquidBounce", "Custom", "WatchDog", "Watchdog2", "NCP", "AAC", "AAC5", "Matrix", "Vulcan"), "Vanilla")
+    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "LiquidBounce", "Custom", "WatchDog", "Watchdog2", "NCP", "AAC", "AAC4", "AAC5", "Matrix", "Vulcan","Medusa"), "Vanilla")
     private val blockForwardMultiplier = FloatValue("BlockForwardMultiplier", 1.0F, 0.2F, 1.0F)
     private val blockStrafeMultiplier = FloatValue("BlockStrafeMultiplier", 1.0F, 0.2F, 1.0F)
     private val consumeForwardMultiplier = FloatValue("ConsumeForwardMultiplier", 1.0F, 0.2F, 1.0F)
@@ -37,6 +36,10 @@ class NoSlow : Module() {
     private val bowStrafeMultiplier = FloatValue("BowStrafeMultiplier", 1.0F, 0.2F, 1.0F)
     private val customOnGround = BoolValue("CustomOnGround", false).displayable { modeValue.equals("Custom") }
     private val customDelayValue = IntegerValue("CustomDelay", 60, 10, 200).displayable { modeValue.equals("Custom") }
+    //AACv4
+    private val c07Value = BoolValue("AAC4-C07", true)
+    private val c08Value = BoolValue("AAC4-C08", true)
+    private val groundValue = BoolValue("AAC4-OnGround", true)
     // Soulsand
     val soulsandValue = BoolValue("Soulsand", false)
     // Slowdown on teleport
@@ -58,6 +61,7 @@ class NoSlow : Module() {
     private var packetBuf = LinkedList<Packet<INetHandlerPlayServer>>()
     private var nextTemp = false
     private var waitC03 = false
+    private var sendPacket = false
     private var lastBlockingStat = false
 
     override fun onDisable() {
@@ -105,6 +109,8 @@ class NoSlow : Module() {
 
     @EventTarget
     fun onMotion(event: MotionEvent) {
+        if(mc.thePlayer == null || mc.theWorld == null)
+            return
         if (alertTimer.hasTimePassed(10000) && alert1Value.get() && (modeValue.equals("Matrix") || modeValue.equals("Vulcan"))) {
             alertTimer.reset()
             ClientUtils.displayChatMessage("§8[§c§lNoSlow§8]§aPlease notice that Vulcan/Matrix NoSlow §cDO NOT §asupport FakeLag Disabler!")
@@ -115,7 +121,6 @@ class NoSlow : Module() {
             return
         }
 
-//        val heldItem = mc.thePlayer.heldItem
         if (modeValue.get().lowercase() == "aac5") {
             if (event.eventState == EventState.POST && (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking || killAura.blockingStatus)) {
                 mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(BlockPos(-1, -1, -1), 255, mc.thePlayer.inventory.getCurrentItem(), 0f, 0f, 0f))
@@ -137,6 +142,10 @@ class NoSlow : Module() {
                     } else if (mc.thePlayer.ticksExisted % 3 == 1) {
                         sendPacket(event, false, true, false, 0, false)
                     }
+                }
+                
+                "aac4" -> {
+                    sendPacket(event, c07Value.get(), c08Value.get(), true, 80, groundValue.get())
                 }
 
                 "custom" -> {
@@ -168,6 +177,8 @@ class NoSlow : Module() {
 
     @EventTarget
     fun onSlowDown(event: SlowDownEvent) {
+        if(mc.thePlayer == null || mc.theWorld == null)
+            return
         val heldItem = mc.thePlayer.heldItem?.item
 
         event.forward = getMultiplier(heldItem, true)
@@ -189,6 +200,8 @@ class NoSlow : Module() {
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
+        if(mc.thePlayer == null || mc.theWorld == null)
+            return
         if((modeValue.equals("Matrix") || modeValue.equals("Vulcan")) && (lastBlockingStat || isBlocking)) {
             if(msTimer.hasTimePassed(230) && nextTemp) {
                 nextTemp = false
@@ -224,8 +237,18 @@ class NoSlow : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
+        if(mc.thePlayer == null || mc.theWorld == null)
+            return
         val packet = event.packet
-
+        if (modeValue.equals("Medusa")) {
+            if ((mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking) && sendPacket) {
+                PacketUtils.sendPacketNoEvent(C0BPacketEntityAction(mc.thePlayer,C0BPacketEntityAction.Action.STOP_SPRINTING))
+                sendPacket = false
+            }
+            if (!mc.thePlayer.isUsingItem || !mc.thePlayer.isBlocking) {
+                sendPacket = true
+            }
+        }
         if((modeValue.equals("Matrix") || modeValue.equals("Vulcan")) && nextTemp) {
             if((packet is C07PacketPlayerDigging || packet is C08PacketPlayerBlockPlacement) && isBlocking) {
                 event.cancelEvent()

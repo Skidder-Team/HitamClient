@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.features.module.modules.combat
 
 import net.ccbluex.liquidbounce.LiquidBounce
@@ -41,7 +36,7 @@ class Velocity : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Simple", "Tick", "Vanilla", "AACPush", "AACZero", "AAC4Reduce", "AAC5Reduce",
                                                       "Redesky1", "Redesky2",
                                                       "AAC5.2.0", "AAC5.2.0Combat",
-                                                      "MatrixReduce", "MatrixSimple",
+                                                      "MatrixReduce", "MatrixSimple", "MatrixReverse",
                                                       "Reverse", "SmoothReverse",
                                                       "Jump",
                                                       "Phase", "PacketPhase", "Glitch", "Spoof",
@@ -366,6 +361,11 @@ class Velocity : Module() {
                         packet.motionX = (packet.getMotionX() * 0.6).toInt()
                         packet.motionZ = (packet.getMotionZ() * 0.6).toInt()
                     }
+                }
+                
+                "matrixreverse" -> {
+                    packet.motionX = (packet.getMotionX() * -0.3).toInt()
+                    packet.motionZ = (packet.getMotionZ() * -0.3).toInt()
                 }
 
                 "aac4reduce" -> {

@@ -140,7 +140,7 @@ class Fly : Module() {
 
     /**
      * 读取mode中的value并和本体中的value合并
-     * 所有的value必须在这个之前初始化
+     * 所有的value必须在这个之前初始化 (cina)
      */
     override val values = super.values.toMutableList().also { modes.map { mode -> mode.values.forEach { value -> it.add(value.displayable { modeValue.equals(mode.modeName) }) } } }
 }
