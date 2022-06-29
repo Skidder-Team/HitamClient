@@ -66,13 +66,15 @@ object LiquidBounce {
 
     // 自动读取客户端版本
     @JvmField
-    val CLIENT_VERSION = "v2.0.0"
+    val CLIENT_VERSION = "2.01"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if(it == "main") "dev" else it
     }
     @JvmField
     val CLIENT_COMMIT_ID = gitInfo["git.commit.id.abbrev"]
+    @JvmField
+    val CLIENT_COMMIT_COUNT = gitInfo["git.total.commit.count"]
 
     var isStarting = true
     var isLoadingConfig = true

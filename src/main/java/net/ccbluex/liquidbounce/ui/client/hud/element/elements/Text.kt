@@ -104,6 +104,8 @@ class Text(
             "clientName" -> LiquidBounce.CLIENT_NAME
             "clientVersion" -> LiquidBounce.CLIENT_VERSION
             "clientCreator" -> LiquidBounce.CLIENT_CREATOR
+            "clientBuild" -> LiquidBounce.CLIENT_COMMIT_COUNT
+            "clientId" -> LiquidBounce.CLIENT_COMMIT_ID
             "fps" -> Minecraft.getDebugFPS().toString()
             "date" -> DATE_FORMAT.format(System.currentTimeMillis())
             "time" -> HOUR_FORMAT.format(System.currentTimeMillis())
