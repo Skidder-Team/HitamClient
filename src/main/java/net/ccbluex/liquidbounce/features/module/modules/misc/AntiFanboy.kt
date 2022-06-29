@@ -17,7 +17,7 @@ import net.minecraft.network.play.server.S14PacketEntity
 import net.minecraft.network.play.server.S1DPacketEntityEffect
 
 @ModuleInfo(name = "AntiFanboy", category = ModuleCategory.MISC)
-class AntiStaff : Module() {
+class AntiFanboy : Module() {
 
     val server  = ListValue("Server", arrayOf("LuckyNetwork","CavryNetwork"),"LuckyNetwork")
     val notify  = BoolValue("Notification",true)
