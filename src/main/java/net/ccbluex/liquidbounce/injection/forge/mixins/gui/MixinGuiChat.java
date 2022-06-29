@@ -1,4 +1,4 @@
-ackage net.ccbluex.liquidbounce.injection.forge.mixins.gui;
+package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
