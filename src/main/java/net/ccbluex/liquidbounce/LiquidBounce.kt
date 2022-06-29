@@ -47,8 +47,8 @@ object LiquidBounce {
     var VERIFY = "Can't load HitamProtect, You can try restart client (Insecure Version)"
     var CLIENTTEXT = "Waiting..."
     var Darkmode = true
-    const val COLORED_NAME = "§b§lHitamClient"
-    const val CLIENT_CREATOR = "Skid Development (Necro, JektDV , Liep_, Walter, AviMuh, Cavry)"
+    const val COLORED_NAME = "§b§lHitam Client"
+    const val CLIENT_CREATOR = "Skid Development (Necro, Liep_, Cavry)"
     const val CLIENT_WEBSITE = "hitam.client"
     val venti = ResourceLocation("fdpclient/imgs/GenshinImpact/venti.png")
     val lumine = ResourceLocation("fdpclient/imgs/GenshinImpact/lumine.png")
