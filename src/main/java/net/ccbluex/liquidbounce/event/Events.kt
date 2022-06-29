@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.event
 
 import net.minecraft.block.Block
@@ -48,6 +43,7 @@ class BlockBBEvent(blockPos: BlockPos, val block: Block, var boundingBox: AxisAl
  */
 class ClickBlockEvent(val clickedBlock: BlockPos?, val enumFacing: EnumFacing?) : Event()
 
+
 /**
  * Called when client is shutting down
  */
@@ -72,7 +68,11 @@ class KeyEvent(val key: Int) : Event()
  *
  * @param eventState PRE or POST
  */
-class MotionEvent(val eventState: EventState) : Event()
+class MotionEvent(val eventState: EventState) : Event() {
+    fun isPre() : Boolean {
+    return eventState == EventState.PRE
+    }
+}
 
 /**
  * Called in "onLivingUpdate" when the player is using a use item.
@@ -142,9 +142,20 @@ class Render3DEvent(val partialTicks: Float) : Event()
 class ScreenEvent(val guiScreen: GuiScreen?) : Event()
 
 /**
+ * Called when the session changes
+ */
+class SessionEvent : Event()
+
+/**
  * Called when player is going to step
  */
 class StepEvent(var stepHeight: Float, val eventState: EventState) : Event()
+
+
+/**
+ * Called when a text is going to be rendered
+ */
+class TextEvent(var text: String?) : Event()
 
 /**
  * tick... tack... tick... tack
