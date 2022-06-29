@@ -10,9 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value=SplashProgress.class, remap=false)
 public abstract class MixinSplashProgress {
 
-//    Should we force the splash screen to be shown?
-//    yes ofc
-
     @Shadow(aliases="SplashProgress", remap=false)
     private static boolean enabled;
 

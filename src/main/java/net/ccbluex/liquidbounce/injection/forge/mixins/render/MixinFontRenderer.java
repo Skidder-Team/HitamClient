@@ -1,13 +1,9 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.injection.forge.mixins.render;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.render.BetterFont;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
+import net.ccbluex.liquidbounce.event.TextEvent;
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager;
 import net.minecraft.client.gui.FontRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +19,9 @@ public abstract class MixinFontRenderer {
         if (string == null || LiquidBounce.eventManager == null)
             return string;
 
-        return LanguageManager.INSTANCE.replace(string);
+        final TextEvent textEvent = new TextEvent(string);
+        LiquidBounce.eventManager.callEvent(textEvent);
+        return textEvent.getText();
     }
 
     @ModifyVariable(method = "getStringWidth", at = @At("HEAD"), ordinal = 0)
@@ -31,7 +29,9 @@ public abstract class MixinFontRenderer {
         if (string == null || LiquidBounce.eventManager == null)
             return string;
 
-        return LanguageManager.INSTANCE.replace(string);
+        final TextEvent textEvent = new TextEvent(string);
+        LiquidBounce.eventManager.callEvent(textEvent);
+        return textEvent.getText();
     }
 
     @Inject(method = "drawString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"), cancellable = true)

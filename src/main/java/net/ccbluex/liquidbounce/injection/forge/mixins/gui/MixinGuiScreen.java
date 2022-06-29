@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -11,10 +6,12 @@ import net.ccbluex.liquidbounce.features.special.GradientBackground;
 import net.ccbluex.liquidbounce.font.FontLoaders;
 import net.ccbluex.liquidbounce.ui.client.GuiBackground;
 import net.ccbluex.liquidbounce.utils.render.BlurUtils;
-import net.ccbluex.liquidbounce.utils.render.ParticleUtils;
-import net.ccbluex.liquidbounce.utils.render.RenderUtils;
+import net.ccbluex.liquidbounce.utils.particles.ParticleUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -77,7 +74,6 @@ public abstract class MixinGuiScreen {
                 int defaultHeight1 = (this.height);
                 int defaultWidth1 = (this.width);
                 GL11.glPushMatrix();
-                if(HUD.INSTANCE.getGenshinImpactAnim().get()) RenderUtils.drawImage(LiquidBounce.INSTANCE.getLumine(), 10, defaultHeight1 - (int) (0.2 * defaultWidth1), (int) (0.2 * defaultWidth1), (int) (0.2 * defaultWidth1));
                 GL11.glPopMatrix();
                 GL11.glPushMatrix();
                 FontLoaders.F30.DisplayFont2(FontLoaders.F30,LiquidBounce.CLIENT_NAME,defaultWidth1 - 12f - FontLoaders.F14.DisplayFontWidths(FontLoaders.F14,LiquidBounce.CLIENT_VERSION) - FontLoaders.F30.DisplayFontWidths(FontLoaders.F30,LiquidBounce.CLIENT_NAME) ,defaultHeight1 - 23.5f,new Color(255,255,255,140).getRGB(),true);
@@ -95,7 +91,6 @@ public abstract class MixinGuiScreen {
                 int defaultHeight1 = (this.height);
                 int defaultWidth1 = (this.width);
                 GL11.glPushMatrix();
-                if(HUD.INSTANCE.getGenshinImpactAnim().get()) RenderUtils.drawImage(LiquidBounce.INSTANCE.getLumine(), 10, defaultHeight1 - (int) (0.2 * defaultWidth1), (int) (0.2 * defaultWidth1), (int) (0.2 * defaultWidth1));
                 GL11.glPopMatrix();
                 GL11.glPushMatrix();
                 FontLoaders.F30.DisplayFont2(FontLoaders.F30,LiquidBounce.CLIENT_NAME,defaultWidth1 - 12f - FontLoaders.F14.DisplayFontWidths(FontLoaders.F14,LiquidBounce.CLIENT_VERSION) - FontLoaders.F30.DisplayFontWidths(FontLoaders.F30,LiquidBounce.CLIENT_NAME) ,defaultHeight1 - 23.5f,new Color(255,255,255,140).getRGB(),true);
