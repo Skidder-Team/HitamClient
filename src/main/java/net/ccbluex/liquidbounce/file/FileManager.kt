@@ -15,8 +15,8 @@ import java.io.*
 import javax.imageio.ImageIO
 
 class FileManager : MinecraftInstance() {
-    val dir = File(mc.mcDataDir, LiquidBounce.CLIENT_NAME + "-1.8")
-    val cacheDir = File(mc.mcDataDir, ".cache/" + LiquidBounce.CLIENT_NAME)
+    val dir = File(mc.mcDataDir, LiquidBounce.CLIENT_NAME_NOSPACE + "-1.8")
+    val cacheDir = File(mc.mcDataDir, ".cache/" + LiquidBounce.CLIENT_NAME_NOSPACE)
     val fontsDir = File(dir, "fonts")
     val configsDir = File(dir, "configs")
     val soundsDir = File(dir, "sounds")
