@@ -22,6 +22,7 @@ import net.ccbluex.liquidbounce.ui.font.FontsGC
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
 import net.ccbluex.liquidbounce.ui.sound.TipSoundManager
 import net.ccbluex.liquidbounce.utils.*
+import net.ccbluex.liquidbounce.launch.data.legacyui.scriptOnline.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
@@ -225,6 +226,7 @@ object LiquidBounce {
         ClientUtils.logInfo("$CLIENT_NAME $CLIENT_VERSION loaded in ${(System.currentTimeMillis() - startTime)}ms!")
     }
 
+   /* 
     private fun checkUpdate() {
         try {
             val get = HttpUtils.get("https://api.github.com/repos/UnlegitMC/FDPClient/commits/${gitInfo["git.branch"]}")
@@ -250,6 +252,7 @@ object LiquidBounce {
             ClientUtils.logError("Failed to check for updates.", t)
         }
     }
+    */
 
     /**
      * Execute if client ui type is selected
