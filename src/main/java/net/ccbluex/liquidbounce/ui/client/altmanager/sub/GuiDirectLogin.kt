@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.ui.client.altmanager.sub
 
 import me.liuli.elixir.manage.AccountSerializer
@@ -13,7 +8,7 @@ import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
 import org.lwjgl.input.Keyboard
 
-class GuiDirectLogin(private val prevGui: GuiScreen) : GuiScreen() {
+class GuiDirectLogin(private val prevGui: GuiAltManager) : GuiScreen() {
     private lateinit var username: GuiTextField
     private lateinit var password: GuiPasswordField
     private var status = "§7%ui.alt.idle%"
@@ -58,8 +53,9 @@ class GuiDirectLogin(private val prevGui: GuiScreen) : GuiScreen() {
                     return
                 }
                 Thread {
+                    val res = GuiAltManager.login(AccountSerializer.accountInstance(username.text, password.text))
                     status = "§a%ui.alt.loggingIn%"
-                    status = GuiAltManager.login(AccountSerializer.accountInstance(username.text, password.text))
+                    status = res
                 }.start()
             }
             2 -> {
