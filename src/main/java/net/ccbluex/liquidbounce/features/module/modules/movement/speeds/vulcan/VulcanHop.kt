@@ -15,7 +15,7 @@ class VulcanHop : SpeedMode("VulcanHop") {
         }
         if (Math.abs(mc.thePlayer.movementInput.moveStrafe) < 0.1f) {
             mc.thePlayer.jumpMovementFactor = 0.026499f
-        } else {
+        }else {
             mc.thePlayer.jumpMovementFactor = 0.0244f
         }
         mc.gameSettings.keyBindJump.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
@@ -35,7 +35,7 @@ class VulcanHop : SpeedMode("VulcanHop") {
 	    if(MovementUtils.getSpeed() < 0.5f) {
 	        MovementUtils.strafe(0.4849f)
 	    }
-        } else if (!MovementUtils.isMoving()) {
+        }else if (!MovementUtils.isMoving()) {
             mc.timer.timerSpeed = 1.00f
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
