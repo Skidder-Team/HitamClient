@@ -106,7 +106,7 @@ class AutoPlay : Module() {
                         if (isLNRejoining == false) {
                            mc.netHandler.addToSendQueue(C01PacketChatMessage("/bedwars-lobbies"))
                            isLNRejoining = true
-                           LiquidBounce.hud.addNotification(Notification(this.name, "Trying to send you to an game")
+                           LiquidBounce.hud.addNotification(Notification(this.name, "Trying to send you to an game"))
                         }
                     }
                 }
@@ -202,7 +202,7 @@ class AutoPlay : Module() {
                 if (isLNRejoining == true) {
                     mc.netHandler.addToSendQueue(C01PacketChatMessage("/rj"))
                     isLNRejoining = false
-                    LiquidBounce.hud.addNotification(Notification(this.name, "Joined the game.")
+                    LiquidBounce.hud.addNotification(Notification(this.name, "Joined the game."))
                 }
             }
         }
