@@ -24,17 +24,19 @@ import kotlin.concurrent.schedule
 @ModuleInfo(name = "AutoPlay", category = ModuleCategory.MISC)
 class AutoPlay : Module() {
 
-    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HyCraft"), "RedeSky")
+    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HyCraft", "LuckyNetwork"), "RedeSky")
     private val delayValue = IntegerValue("JoinDelay", 3, 0, 7)
 
     private var clicking = false
     private var queued = false
     private var clickState = 0
+    private var isLNRejoining = false
 
     override fun onEnable() {
         clickState = 0
         clicking = false
         queued = false
+        isLNRejoining = false
     }
 
     @EventTarget
@@ -51,7 +53,7 @@ class AutoPlay : Module() {
                     event.cancelEvent()
                 }
             }
-            "hypixel" -> {
+            "hypixel", "luckynetwork" -> {
                 if (clickState == 1 && packet is S2DPacketOpenWindow) {
                     event.cancelEvent()
                 }
@@ -97,6 +99,15 @@ class AutoPlay : Module() {
                     if (modeValue.equals("hypixel") && clickState == 1 && windowId != 0 && itemName.equals("item.fireworks", ignoreCase = true)) {
                         mc.netHandler.addToSendQueue(C0EPacketClickWindow(windowId, slot, 0, 0, item, 1919))
                         mc.netHandler.addToSendQueue(C0DPacketCloseWindow(windowId))
+                    }
+                }
+                "luckynetwork" -> {
+                    if (clickState == 0 && windowId == 0 && slot == 44 && itemName.contains("bed", ignoreCase = true)) {
+                        if (isLNRejoining == false) {
+                           mc.netHandler.addToSendQueue(C01PacketChatMessage("/bedwars-lobbies"))
+                           isLNRejoining = true
+                           LiquidBounce.hud.addNotification(Notification(this.name, "Trying to send you to an game")
+                        }
                     }
                 }
             }
@@ -185,6 +196,16 @@ class AutoPlay : Module() {
         clicking = false
         clickState = 0
         queued = false
+
+        when (modeValue.get().lowercase()) {
+            "luckynetwork" -> {
+                if (isLNRejoining == true) {
+                    mc.netHandler.addToSendQueue(C01PacketChatMessage("/rj"))
+                    isLNRejoining = false
+                    LiquidBounce.hud.addNotification(Notification(this.name, "Joined the game.")
+                }
+            }
+        }
     }
 
     override val tag: String
