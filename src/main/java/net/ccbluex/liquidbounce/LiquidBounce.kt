@@ -26,11 +26,7 @@ import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.ui.font.FontsGC
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
 import net.ccbluex.liquidbounce.ui.sound.TipSoundManager
-import net.ccbluex.liquidbounce.utils.ClassUtils
-import net.ccbluex.liquidbounce.utils.ClientUtils
-import net.ccbluex.liquidbounce.utils.InventoryUtils
-import net.ccbluex.liquidbounce.utils.RotationUtils
-import net.ccbluex.liquidbounce.utils.misc.HttpUtils
+import net.ccbluex.liquidbounce.utils.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
@@ -134,6 +130,8 @@ object LiquidBounce {
         eventManager.registerListener(AntiForge)
         eventManager.registerListener(InventoryUtils)
         eventManager.registerListener(ServerSpoof)
+        eventManager.registerListener(SessionUtils())
+        eventManager.registerListener(StatisticsUtils())
 
         // Create command manager
         commandManager = CommandManager()
