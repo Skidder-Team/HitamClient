@@ -49,7 +49,10 @@ class Fly : Module() {
     var launchYaw = 0f
     var launchPitch = 0f
 
+    var antiDesync = false
+
     override fun onEnable() {
+        antiDesync = false
         if (mc.thePlayer.onGround && fakeDamageValue.get()) {
             val event = PacketEvent(S19PacketEntityStatus(mc.thePlayer, 2.toByte()), PacketEvent.Type.RECEIVE)
             LiquidBounce.eventManager.callEvent(event)
@@ -68,6 +71,7 @@ class Fly : Module() {
     }
 
     override fun onDisable() {
+        antiDesync = false
         mc.thePlayer.capabilities.isFlying = false
         mc.thePlayer.capabilities.flySpeed = 0.05f
         mc.thePlayer.noClip = false
@@ -140,7 +144,7 @@ class Fly : Module() {
 
     /**
      * 读取mode中的value并和本体中的value合并
-     * 所有的value必须在这个之前初始化 (cina)
+     * 所有的value必须在这个之前初始化
      */
     override val values = super.values.toMutableList().also { modes.map { mode -> mode.values.forEach { value -> it.add(value.displayable { modeValue.equals(mode.modeName) }) } } }
 }
