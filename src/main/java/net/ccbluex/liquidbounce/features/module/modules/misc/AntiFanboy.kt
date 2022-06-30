@@ -19,7 +19,7 @@ import net.minecraft.network.play.server.S1DPacketEntityEffect
 @ModuleInfo(name = "AntiFanboy", category = ModuleCategory.MISC)
 class AntiFanboy : Module() {
 
-    val server  = ListValue("Server", arrayOf("LuckyNetwork","CavryNetwork"),"LuckyNetwork")
+    val server  = ListValue("Server", arrayOf("LuckyNetwork","CavryNetwork","QuadFlame"),"LuckyNetwork")
     val notify  = BoolValue("Notification",true)
     val chat    = BoolValue("SendChatMessage",false)
     val message = TextValue("Message", "%staff% was detected as a staff member!").displayable { chat.get() }
@@ -29,6 +29,7 @@ class AntiFanboy : Module() {
     
     private var luckynetFanboy : String = "Dapry WhoIsRihun Feraaaa FacedApollo"
     private var cavrynetFanboy : String = "Cavry Necrovert Lievert Dapry JektDV Nafry"
+    private var quadflameFanboy : String = "iRedible quadflame Aussiecanttap hi12167pies"
 
     
     private var detected = false
@@ -47,6 +48,9 @@ class AntiFanboy : Module() {
                 staffs = cavrynetFanboy
             }
 
+            "quadflame" -> {
+                staffs = quadflameFanboy
+            }
             
         }
             
@@ -63,11 +67,11 @@ class AntiFanboy : Module() {
             if (entity != null && (staffs.contains(entity.name) || staffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
                     if (notify.get()){
-                        LiquidBounce.hud.addNotification(Notification(name, "Detected staff members with invis. You should quit ASAP.", NotifyType.WARNING, 8000))
+                        LiquidBounce.hud.addNotification(Notification(name, "Detected server fanboys with invis. You should quit ASAP.", NotifyType.WARNING, 8000))
                     }
                     
                     if (chat.get()) {
-                        mc.thePlayer.sendChatMessage((message.get()).replace("%staff%", entity.name))
+                        mc.thePlayer.sendChatMessage((message.get()).replace("%fanboy%", entity.name))
                     }
                     if (leave.get()) {
                         mc.thePlayer.sendChatMessage(leaveMessage.get())
@@ -83,11 +87,11 @@ class AntiFanboy : Module() {
             if (entity != null && (staffs.contains(entity.name) || staffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
                     if (notify.get()){
-                    LiquidBounce.hud.addNotification(Notification(name, "Detected staff members. You should quit ASAP.", NotifyType.WARNING,8000))
+                    LiquidBounce.hud.addNotification(Notification(name, "Detected server fanboys. You should quit ASAP.", NotifyType.WARNING,8000))
                     }
                     
                     if (chat.get()) {
-                        ClientUtils.displayChatMessage((message.get()).replace("%staff%", entity.name))
+                        ClientUtils.displayChatMessage((message.get()).replace("%fanboy%", entity.name))
                     }
                     
                     if (leave.get()) {
