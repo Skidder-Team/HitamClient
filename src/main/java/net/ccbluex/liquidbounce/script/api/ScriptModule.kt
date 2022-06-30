@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.script.api
 
 import jdk.nashorn.api.scripting.JSObject
@@ -123,6 +118,9 @@ class ScriptModule(private val moduleObject: JSObject) : Module() {
 
     @EventTarget
     fun onWorld(worldEvent: WorldEvent) = callEvent("world", worldEvent)
+
+    @EventTarget
+    fun onSession(sessionEvent: SessionEvent) = callEvent("session")
 
     @EventTarget
     fun onClickWindow(clickWindowEvent: ClickWindowEvent) = callEvent("clickWindow", clickWindowEvent)

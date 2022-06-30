@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce
 
 import com.google.gson.JsonParser
@@ -60,12 +55,12 @@ object LiquidBounce {
         }
     }
 
-    // 自动读取客户端版本
+    // 自动读取客户端版本 (cina)
     @JvmField
     val CLIENT_VERSION = "2.01"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
-        if(it == "main") "dev" else it
+        if (it == "main") "dev" else it
     }
     @JvmField
     val CLIENT_COMMIT_ID = gitInfo["git.commit.id.abbrev"]
@@ -82,6 +77,7 @@ object LiquidBounce {
     @JvmStatic
     lateinit var commandManager: CommandManager
     lateinit var eventManager: EventManager
+    lateinit var subscriptions: Subscriptions
     lateinit var fileManager: FileManager
     lateinit var scriptManager: ScriptManager
     lateinit var tipSoundManager: TipSoundManager
@@ -99,7 +95,10 @@ object LiquidBounce {
 
     val launchFilters = mutableListOf<EnumLaunchFilter>()
     private val dynamicLaunchOptions: Array<LaunchOption>
-        get() = ClassUtils.resolvePackage("${LaunchOption::class.java.`package`.name}.options", LaunchOption::class.java)
+        get() = ClassUtils.resolvePackage(
+            "${LaunchOption::class.java.`package`.name}.options",
+            LaunchOption::class.java
+        )
             .filter {
                 val annotation = it.getDeclaredAnnotation(LaunchFilterInfo::class.java)
                 if (annotation != null) {
@@ -107,13 +106,20 @@ object LiquidBounce {
                 }
                 false
             }
-            .map { try { it.newInstance() } catch (e: IllegalAccessException) { ClassUtils.getObjectInstance(it) as LaunchOption } }.toTypedArray()
+            .map {
+                try {
+                    it.newInstance()
+                } catch (e: IllegalAccessException) {
+                    ClassUtils.getObjectInstance(it) as LaunchOption
+                }
+            }.toTypedArray()
 
     /**
      * Execute if client will be started
      */
     fun initClient() {
         ClientUtils.logInfo("Loading $CLIENT_NAME $CLIENT_VERSION, by $CLIENT_CREATOR")
+        ClientUtils.setTitle("Initializing...");
         val startTime = System.currentTimeMillis()
         // Create file manager
         fileManager = FileManager()
@@ -136,7 +142,12 @@ object LiquidBounce {
         // Create command manager
         commandManager = CommandManager()
 
-        fileManager.loadConfigs(fileManager.accountsConfig, fileManager.friendsConfig, fileManager.specialConfig)
+        fileManager.loadConfigs(
+            fileManager.accountsConfig,
+            fileManager.friendsConfig,
+            fileManager.specialConfig,
+            fileManager.subscriptsConfig
+        )
 
         // Load client fonts
         Fonts.loadFonts()
@@ -192,10 +203,24 @@ object LiquidBounce {
 
         // run update checker
         /*
-        if(CLIENT_VERSION != "unknown") {
+        if (CLIENT_VERSION != "unknown") {
             thread(block = this::checkUpdate)
         }
         */
+
+        ClientUtils.setTitle("Loading script subscripts...");
+        for (subscript in fileManager.subscriptsConfig.subscripts) {
+            //println(subscript.url+":"+subscript.name)
+            Subscriptions.addSubscribes(ScriptSubscribe(subscript.url, subscript.name))
+            scriptManager.disableScripts()
+            scriptManager.unloadScripts()
+            for (scriptSubscribe in Subscriptions.subscribes) {
+                scriptSubscribe.load()
+            }
+            scriptManager.loadScripts()
+            scriptManager.enableScripts()
+        }
+        ClientUtils.setTitle();
 
         ClientUtils.logInfo("$CLIENT_NAME $CLIENT_VERSION loaded in ${(System.currentTimeMillis() - startTime)}ms!")
     }

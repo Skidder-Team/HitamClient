@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.script
 
 import jdk.internal.dynalink.beans.StaticClass
@@ -12,6 +7,7 @@ import jdk.nashorn.api.scripting.ScriptUtils
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.features.module.Module
+import net.ccbluex.liquidbounce.launch.data.legacyui.scriptOnline.Subscriptions
 import net.ccbluex.liquidbounce.script.api.*
 import net.ccbluex.liquidbounce.script.api.global.Chat
 import net.ccbluex.liquidbounce.script.api.global.Setting
@@ -23,8 +19,14 @@ import javax.script.ScriptEngineManager
 
 class Script(private val scriptFile: File) : MinecraftInstance() {
 
-    private val scriptEngine = NashornScriptEngineFactory().getScriptEngine(emptyArray(), this.javaClass.classLoader, ScriptSafetyManager.classFilter)
-    private val scriptText = scriptFile.readText(Charsets.UTF_8)
+    private val scriptEngine = NashornScriptEngineFactory().getScriptEngine(
+        emptyArray(),
+        this.javaClass.classLoader,
+        ScriptSafetyManager.classFilter
+    )
+    var scriptText: String =
+        if (!scriptFile.path.contains("CloudLoad")) scriptFile.readText(Charsets.UTF_8) else "//api_version=2"
+    var isOnline = false
 
     // Script information
     lateinit var scriptName: String
@@ -32,12 +34,19 @@ class Script(private val scriptFile: File) : MinecraftInstance() {
     lateinit var scriptAuthors: Array<String>
 
     private var state = false
+    private var isEnable = false
     private val events = HashMap<String, JSObject>()
     private val registeredModules = mutableListOf<Module>()
     private val registeredCommands = mutableListOf<Command>()
+    fun getState(): Boolean {
+        return isEnable;
+    }
+
+    fun getRegisteredModules(): MutableList<Module> {
+        return registeredModules;
+    }
 
     init {
-        // Global classes
         scriptEngine.put("Chat", StaticClass.forClass(Chat::class.java))
         scriptEngine.put("Setting", StaticClass.forClass(Setting::class.java))
 
@@ -49,11 +58,13 @@ class Script(private val scriptFile: File) : MinecraftInstance() {
 
         // Global functions
         scriptEngine.put("registerScript", RegisterScript())
-
+        if (Subscriptions.loadingCloud) {
+            scriptText = Subscriptions.tempJs
+            isOnline = true
+        }
         supportLegacyScripts()
 
         scriptEngine.eval(scriptText)
-
         callEvent("load")
     }
 
@@ -67,7 +78,8 @@ class Script(private val scriptFile: File) : MinecraftInstance() {
         override fun apply(scriptObject: JSObject): Script {
             scriptName = scriptObject.getMember("name") as String
             scriptVersion = scriptObject.getMember("version") as String
-            scriptAuthors = ScriptUtils.convert(scriptObject.getMember("authors"), Array<String>::class.java) as Array<String>
+            scriptAuthors =
+                ScriptUtils.convert(scriptObject.getMember("authors"), Array<String>::class.java) as Array<String>
 
             return this@Script
         }
@@ -101,10 +113,16 @@ class Script(private val scriptFile: File) : MinecraftInstance() {
         callback.call(commandObject, command)
     }
 
+    fun regAnyThing() {
+        registeredModules.forEach { LiquidBounce.moduleManager.registerModule(it) }
+        registeredCommands.forEach { LiquidBounce.commandManager.registerCommand(it) }
+    }
+
     fun supportLegacyScripts() {
         if (!scriptText.lines().first().contains("api_version=2")) {
             ClientUtils.logWarn("[ScriptAPI] Running script '${scriptFile.name}' with legacy support.")
-            val legacyScript = LiquidBounce::class.java.getResource("/assets/minecraft/fdpclient/scriptapi/legacy.js").readText()
+            val legacyScript =
+                LiquidBounce::class.java.getResource("/assets/minecraft/fdpclient/scriptapi/legacy.js").readText()
             scriptEngine.eval(legacyScript)
         }
     }
@@ -154,7 +172,15 @@ class Script(private val scriptFile: File) : MinecraftInstance() {
      * Calls the handler of a registered event.
      * @param eventName Name of the event to be called.
      */
-    private fun callEvent(eventName: String) {
+    public fun callEvent(eventName: String) {
+        //println("call $eventName")
+        if (eventName == "enable") {
+            isEnable = true;
+        } else {
+            if (eventName == "disable") {
+                isEnable = false;
+            }
+        }
         try {
             events[eventName]?.call(null)
         } catch (throwable: Throwable) {
