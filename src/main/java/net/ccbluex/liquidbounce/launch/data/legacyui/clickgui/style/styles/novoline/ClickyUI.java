@@ -1,8 +1,4 @@
-/*
- * Decompiled with CFR 0.136.
- */
 package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
-
 
 import com.google.common.collect.Lists;
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -45,7 +41,6 @@ public class ClickyUI extends GuiScreen {
         int defaultWidth1 = (this.width);
         Gui.drawRect(0, 0, Display.getWidth(), Display.getHeight(), new Color(0, 0, 0, 100).getRGB());//Shadow
 
-        if(HUD.INSTANCE.getGenshinImpactAnim().get()) RenderUtils.drawImage(LiquidBounce.INSTANCE.getVenti(), defaultWidth1-(int) (0.6*defaultWidth1) ,defaultHeight1-(int) (0.3*defaultWidth1),(int) (0.6*defaultWidth1),(int) (0.3*defaultWidth1));
         GlStateManager.pushMatrix();
         windows.forEach(w2 -> w2.render(mouseX, mouseY));
         GlStateManager.popMatrix();
@@ -73,4 +68,3 @@ public class ClickyUI extends GuiScreen {
     }
 
 }
-
