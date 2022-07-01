@@ -16,7 +16,7 @@ repositories {
     maven { url = "https://repo.getfdp.today/" }
 }
 
-version = "2.10"
+version = "2.25"
 group = "dev.skid.client"
 archivesBaseName = "HitamClient"
 
