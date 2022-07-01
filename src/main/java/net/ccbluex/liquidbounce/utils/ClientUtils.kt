@@ -92,7 +92,7 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun displayAlert(message: String) {
-        displayChatMessage("§8[" + LiquidBounce.COLORED_NAME + "§8] §f" + message)
+        displayChatMessage("§7[§b!§7] " + LiquidBounce.COLORED_NAME + " §c» §f" + message)
     }
 
     fun displayChatMessage(message: String) {
