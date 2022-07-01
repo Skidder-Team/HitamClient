@@ -21,8 +21,13 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      
+      # Give gradlew perms
+      - run: chmod +x gradlew
 
+      # Build
       - run: ./gradlew setupCiWorkspace && ./gradlew build
 
+      # Store the artifacts
       - store_artifacts:
           path: /build/libs
