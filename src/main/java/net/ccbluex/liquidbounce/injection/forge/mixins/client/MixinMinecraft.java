@@ -247,7 +247,7 @@ public abstract class MixinMinecraft {
     private void displayCrashReport(CrashReport crashReport, CallbackInfo ci) {
         if (!WindowUtils.isWindows()) return;
         try {
-            File file = new File("./", "FDPCrashLogs.txt");
+            File file = new File("./", "HitamCrashLogs.txt");
             if (!file.exists()) {
                 file.createNewFile();
             } else {
@@ -255,22 +255,22 @@ public abstract class MixinMinecraft {
                 file.createNewFile();
             }
             FileWriter fileWritter = new FileWriter(file.getName(), true);
-            fileWritter.write("######################### FDP CRASH REPORT #########################\r\n\r\n" +
-                    "If this problem persists, please send this file to the FDPClient developers! Website (where you can join the discord server): http://FDPClient.Club/\r\nThis file will be saved in \".minecraft/FDPCrashLogs.txt\"" +
+            fileWritter.write("######################### HITAM CLIENT CRASH REPORT #########################\r\n\r\n" +
+                    "If this problem persists, please send this file to the HitamClient developers! Website (where you can join the discord server): https://discord.hitamnig.ga/\r\nThis file will be saved in \".minecraft/HitamCrashLogs.txt\"" +
                     "\r\n\r\n" +
-                    " | 在没有错误日志的情况下诊断任何问题无异于闭眼开车!  --Apache官方文档\r\n" +
+                    " | 在没有错误日志的情况下诊断任何问题无异于闭眼开车! (cina)  --Apache官方文档\r\n" +
                     " | Troubleshooting any problem without the error log is like driving with your eyes closed.\r\n" +
                     " | From Apache official documentation Getting Started chapter\r\n" +
                     "   - INFO:\r\n" +
                     "   |   Version: " + LiquidBounce.CLIENT_VERSION + "\r\n" +
                     "   |   Time: " + System.currentTimeMillis() + "\r\n" +
                     "   |   OS: " + Util.getOSType() + "\r\n" +
-                    "\r\n######################### FDP CRASH REPORT #########################\r\n" + crashReport.getCompleteReport());
+                    "\r\n######################### HITAM CLIENT REPORT #########################\r\n" + crashReport.getCompleteReport());
             fileWritter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File file1 = new File("./", "FDPCrashLogs.txt");
+        File file1 = new File("./", "HitamCrashLogs.txt");
         ;
         String s = file1.getAbsolutePath();
 
