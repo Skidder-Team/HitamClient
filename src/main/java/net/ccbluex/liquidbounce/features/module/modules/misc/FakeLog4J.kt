@@ -19,7 +19,7 @@ class FakeLog4J: Module() {
     @EventTarget
     fun onKilled(event: EntityKilledEvent) {
         EntityLivingBase target = event.getTargetEntity()
-        int var1 = 1
+        var var1: Int = 1
 
         while(var1 < 21) {
          ++var1
