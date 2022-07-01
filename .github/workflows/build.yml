@@ -28,8 +28,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 6.9.1
+      - name: Give ./gradlew perms
+        run: chmod +x gradlew
       - name: Build
-        run: gradle setupCiWorkspace && gradle build
+        run: ./gradlew setupCiWorkspace && ./gradlew build
       - name: Rename build artifacts
         run: mv build/libs/HitamClient-*.jar build/libs/HitamClient-b${{ steps.vars.outputs.sha_short }}.jar
       - name: Upload build artifacts
