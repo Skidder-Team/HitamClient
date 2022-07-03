@@ -1,18 +1,22 @@
 package net.ccbluex.liquidbounce
 
-import com.google.gson.JsonParser
 import net.ccbluex.liquidbounce.event.ClientShutdownEvent
 import net.ccbluex.liquidbounce.event.EventManager
 import net.ccbluex.liquidbounce.features.command.CommandManager
 import net.ccbluex.liquidbounce.features.macro.MacroManager
 import net.ccbluex.liquidbounce.features.module.ModuleManager
-import net.ccbluex.liquidbounce.features.special.*
+import net.ccbluex.liquidbounce.features.special.AntiForge
+import net.ccbluex.liquidbounce.features.special.CombatManager
+import net.ccbluex.liquidbounce.features.special.DiscordRPC
+import net.ccbluex.liquidbounce.features.special.ServerSpoof
 import net.ccbluex.liquidbounce.file.FileManager
 import net.ccbluex.liquidbounce.file.config.ConfigManager
 import net.ccbluex.liquidbounce.launch.EnumLaunchFilter
 import net.ccbluex.liquidbounce.launch.LaunchFilterInfo
 import net.ccbluex.liquidbounce.launch.LaunchOption
 import net.ccbluex.liquidbounce.launch.data.GuiLaunchOptionSelectMenu
+import net.ccbluex.liquidbounce.launch.data.legacyui.scriptOnline.ScriptSubscribe
+import net.ccbluex.liquidbounce.launch.data.legacyui.scriptOnline.Subscriptions
 import net.ccbluex.liquidbounce.script.ScriptManager
 import net.ccbluex.liquidbounce.ui.cape.GuiCapeManager
 import net.ccbluex.liquidbounce.ui.client.hud.HUD
@@ -22,7 +26,6 @@ import net.ccbluex.liquidbounce.ui.font.FontsGC
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
 import net.ccbluex.liquidbounce.ui.sound.TipSoundManager
 import net.ccbluex.liquidbounce.utils.*
-import net.ccbluex.liquidbounce.launch.data.legacyui.scriptOnline.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
@@ -36,14 +39,11 @@ object LiquidBounce {
     const val CLIENT_NAME = "Hitam Client"
     const val CLIENT_NAME_NOSPACE = "HitamClient"
     @JvmStatic
-    var VERIFY = "Can't load HitamProtect, You can try restart client (Insecure Version)"
     var CLIENTTEXT = "Waiting..."
     var Darkmode = true
     const val COLORED_NAME = "§b§lHitam Client"
     const val CLIENT_CREATOR = "Skid Development (Necro, Liep_, Cavry)"
     const val CLIENT_WEBSITE = "hitam.client"
-    val venti = ResourceLocation("fdpclient/imgs/GenshinImpact/venti.png")
-    val lumine = ResourceLocation("fdpclient/imgs/GenshinImpact/lumine.png")
     const val MINECRAFT_VERSION = "1.8.9"
     const val VERSIONTYPE = "development"
     @JvmField
@@ -58,7 +58,7 @@ object LiquidBounce {
 
     // 自动读取客户端版本 (cina)
     @JvmField
-    val CLIENT_VERSION = "2.25"
+    val CLIENT_VERSION = "2.26"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if (it == "main") "dev" else it
@@ -70,7 +70,6 @@ object LiquidBounce {
 
     var isStarting = true
     var isLoadingConfig = true
-    var latest = ""
         private set
 
     // Managers
