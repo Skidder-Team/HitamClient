@@ -70,7 +70,6 @@ object LiquidBounce {
 
     var isStarting = true
     var isLoadingConfig = true
-        private set
 
     // Managers
     lateinit var moduleManager: ModuleManager
