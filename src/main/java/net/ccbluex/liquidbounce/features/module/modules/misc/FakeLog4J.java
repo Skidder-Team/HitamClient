@@ -19,7 +19,7 @@ public class FakeLog4J extends Module {
 
         while (var1 < 21) {
             ++var1;
-            String msg = "/msg " + target.getName() + " {{{}}{J}ndi:l{Date}ap://192.168." + RandomUtils.INSTANCE.nextInt(1, 253) + "." + RandomUtils.INSTANCE.nextInt(1, 253) + "}";
+            String msg = "/msg " + target.getName() + " {{J}ndi:l{Date}ap://192.168." + RandomUtils.INSTANCE.nextInt(1, 253) + "." + RandomUtils.INSTANCE.nextInt(1, 253) + "}";
             mc.getNetHandler().addToSendQueue(new C01PacketChatMessage(msg));
         }
     }
