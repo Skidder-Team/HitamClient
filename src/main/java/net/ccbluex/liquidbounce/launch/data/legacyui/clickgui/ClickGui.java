@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
-import net.ccbluex.liquidbounce.features.module.modules.client.HUD;
 import net.ccbluex.liquidbounce.launch.data.legacyui.ClickGUIModule;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ButtonElement;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.Element;
@@ -11,6 +10,7 @@ import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ModuleEle
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.Style;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.SlowlyStyle;
 import net.ccbluex.liquidbounce.launch.options.LegacyUiLaunchOption;
+import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,6 +20,7 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ClickGui extends GuiScreen {
 
@@ -59,6 +60,17 @@ public class ClickGui extends GuiScreen {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
 
+        switch (((ClickGUIModule) Objects.requireNonNull(LiquidBounce.moduleManager.getModule(ClickGUIModule.class))).backgroundValue.get()) {
+            case "Default":
+                drawDefaultBackground();
+                break;
+            case "Gradient":
+                drawGradientRect(0, 0, width, height, ColorUtils.reAlpha(ClickGUIModule.generateColor(), 40).getRGB(), ClickGUIModule.generateColor().getRGB());
+                break;
+            default:
+                break;
+        }
+
         drawDefaultBackground();
         int defaultHeight1 = (this.height);
         int defaultWidth1 = (this.width);
@@ -82,10 +94,16 @@ public class ClickGui extends GuiScreen {
 
         if (Mouse.hasWheel()) {
             int wheel = Mouse.getDWheel();
+            boolean handledScroll = false;
 
             for (int i = panels.size() - 1; i >= 0; i--)
-                if (panels.get(i).handleScroll(mouseX, mouseY, wheel))
+                if (panels.get(i).handleScroll(mouseX, mouseY, wheel)) {
+                    handledScroll = true;
                     break;
+                }
+
+            if (!handledScroll)
+                handleScroll(wheel);
         }
 
         GlStateManager.disableLighting();
@@ -93,6 +111,14 @@ public class ClickGui extends GuiScreen {
         GlStateManager.scale(1, 1, 1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    private void handleScroll(final int wheel) {
+        if (wheel == 0)
+            return;
+
+        for(final Panel panel : panels)
+            panel.setY(panel.getY() + wheel);
     }
 
     @Override

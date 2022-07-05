@@ -70,9 +70,14 @@ class KeyEvent(val key: Int) : Event()
  */
 class MotionEvent(val eventState: EventState) : Event() {
     fun isPre() : Boolean {
-    return eventState == EventState.PRE
+        return eventState == EventState.PRE
     }
 }
+
+/**
+ * Called when an entity receives damage
+ */
+class EntityDamageEvent(val damagedEntity: Entity): Event()
 
 /**
  * Called in "onLivingUpdate" when the player is using a use item.

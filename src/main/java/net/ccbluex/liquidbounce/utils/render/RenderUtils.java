@@ -28,7 +28,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityEgg;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Timer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
@@ -43,8 +45,9 @@ import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+
 import static akka.actor.Nobody.start;
 import static akka.actor.Nobody.stop;
 import static java.lang.Math.*;
@@ -252,6 +255,102 @@ public final class RenderUtils extends MinecraftInstance {
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_BLEND);
         setGlState(GL_CULL_FACE, hasCull);
+    }
+
+    public static void drawShadow(float x, float y, float width, float height) {
+        drawTexturedRect(x - 9, y - 9, 9, 9, "paneltopleft");
+        drawTexturedRect(x - 9, y + height, 9, 9, "panelbottomleft");
+        drawTexturedRect(x + width, y + height, 9, 9, "panelbottomright");
+        drawTexturedRect(x + width, y - 9, 9, 9, "paneltopright");
+        drawTexturedRect(x - 9, y, 9, height, "panelleft");
+        drawTexturedRect(x + width, y, 9, height, "panelright");
+        drawTexturedRect(x, y - 9, width, 9, "paneltop");
+        drawTexturedRect(x, y + height, width, 9, "panelbottom");
+    }
+
+    public static void drawTexturedRect(float x, float y, float width, float height, String image) {
+        glPushMatrix();
+        final boolean enableBlend = glIsEnabled(GL_BLEND);
+        final boolean disableAlpha = !glIsEnabled(GL_ALPHA_TEST);
+        if (!enableBlend) glEnable(GL_BLEND);
+        if (!disableAlpha) glDisable(GL_ALPHA_TEST);
+        mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/shadow/" + image + ".png"));
+        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderUtils.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
+        if (!enableBlend) glDisable(GL_BLEND);
+        if (!disableAlpha) glEnable(GL_ALPHA_TEST);
+        glPopMatrix();
+    }
+
+    public static void drawModalRectWithCustomSizedTexture(float x, float y, float u, float v, float width, float height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(x, (y + height), 0.0D).tex((u * f), ((v + height) * f1)).endVertex();
+        worldrenderer.pos((x + width), (y + height), 0.0D).tex(((u + width) * f), ((v + height) * f1)).endVertex();
+        worldrenderer.pos((x + width), y, 0.0D).tex(((u + width) * f), (v * f1)).endVertex();
+        worldrenderer.pos(x, y, 0.0D).tex((u * f), (v * f1)).endVertex();
+        tessellator.draw();
+    }
+    public static void customRounded(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float rTL, float rTR, float rBR, float rBL, int color) {
+        float alpha = (color >> 24 & 0xFF) / 255.0F;
+        float red = (color >> 16 & 0xFF) / 255.0F;
+        float green = (color >> 8 & 0xFF) / 255.0F;
+        float blue = (color & 0xFF) / 255.0F;
+
+        float z = 0;
+        if (paramXStart > paramXEnd) {
+            z = paramXStart;
+            paramXStart = paramXEnd;
+            paramXEnd = z;
+        }
+
+        if (paramYStart > paramYEnd) {
+            z = paramYStart;
+            paramYStart = paramYEnd;
+            paramYEnd = z;
+        }
+
+        double xTL = paramXStart + rTL;
+        double yTL = paramYStart + rTL;
+
+        double xTR = paramXEnd - rTR;
+        double yTR = paramYStart + rTR;
+
+        double xBR = paramXEnd - rBR;
+        double yBR = paramYEnd - rBR;
+
+        double xBL = paramXStart + rBL;
+        double yBL = paramYEnd - rBL;
+
+        glPushMatrix();
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glLineWidth(1);
+
+        glColor4f(red, green, blue, alpha);
+        glBegin(GL_POLYGON);
+
+        double degree = Math.PI / 180;
+        for (double i = 0; i <= 90; i += 0.25)
+            glVertex2d(xBR + Math.sin(i * degree) * rBR, yBR + Math.cos(i * degree) * rBR);
+        for (double i = 90; i <= 180; i += 0.25)
+            glVertex2d(xTR + Math.sin(i * degree) * rTR, yTR + Math.cos(i * degree) * rTR);
+        for (double i = 180; i <= 270; i += 0.25)
+            glVertex2d(xTL + Math.sin(i * degree) * rTL, yTL + Math.cos(i * degree) * rTL);
+        for (double i = 270; i <= 360; i += 0.25)
+            glVertex2d(xBL + Math.sin(i * degree) * rBL, yBL + Math.cos(i * degree) * rBL);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_BLEND);
+        glDisable(GL_LINE_SMOOTH);
+        glPopMatrix();
     }
 
     public static void drawRoundedCornerRect(float x, float y, float x1, float y1, float radius) {
@@ -479,7 +578,6 @@ public final class RenderUtils extends MinecraftInstance {
 
         glEnd();
     }
-
     public static void drawGradientSidewaysV(double left, double top, double right, double bottom, int col1, int col2) {
         float f = (float) (col1 >> 24 & 255) / 255.0f;
         float f1 = (float) (col1 >> 16 & 255) / 255.0f;
@@ -509,21 +607,7 @@ public final class RenderUtils extends MinecraftInstance {
         GL11.glDisable((int) 2848);
         GL11.glShadeModel((int) 7424);
         Gui.drawRect(0, 0, 0, 0, 0);
-
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glShadeModel(GL_SMOOTH);
-
-        quickDrawGradientSidewaysV(left, top, right, bottom, col1, col2);
-
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
-        glShadeModel(GL_FLAT);
     }
-
     public static void quickDrawGradientSidewaysV(double left, double top, double right, double bottom, int col1, int col2) {
         glBegin(GL_QUADS);
 
@@ -536,8 +620,6 @@ public final class RenderUtils extends MinecraftInstance {
 
         glEnd();
     }
-
-
     public static void drawBlockBox(final BlockPos blockPos, final Color color, final boolean outline, final boolean box, final float outlineWidth) {
         final RenderManager renderManager = mc.getRenderManager();
         final Timer timer = mc.timer;
@@ -582,7 +664,6 @@ public final class RenderUtils extends MinecraftInstance {
         glDepthMask(true);
         resetCaps();
     }
-
     public static void drawSelectionBoundingBox(AxisAlignedBB boundingBox) {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -844,21 +925,7 @@ public final class RenderUtils extends MinecraftInstance {
         quickDrawRect(x, y, x2, y2, color.getRGB());
     }
 
-    public static void drawRect(final float x, final float y, final float x2, final float y2, final int color) {
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-
-        glColor(color);
-        quickDrawRect(x, y, x2, y2);
-
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
-    }
-
-    public static void brawRect(float left, float top, float right, float bottom, int color) {
+    public static void drawRect(float left, float top, float right, float bottom, int color) {
         if (left < right) {
             float i = left;
             left = right;
@@ -890,7 +957,25 @@ public final class RenderUtils extends MinecraftInstance {
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
     }
+    public static void drawRect(final double x, final double y, final double x2, final double y2, final int color) {
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
 
+        glColor(color);
+        glBegin(GL_QUADS);
+
+        glVertex2d(x2, y);
+        glVertex2d(x, y);
+        glVertex2d(x, y2);
+        glVertex2d(x2, y2);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_BLEND);
+        glDisable(GL_LINE_SMOOTH);
+    }
     public static void drawRect(final float x, final float y, final float x2, final float y2, final Color color) {
         drawRect(x, y, x2, y2, color.getRGB());
     }
@@ -1273,25 +1358,6 @@ public final class RenderUtils extends MinecraftInstance {
             glEnable(cap);
         else
             glDisable(cap);
-    }
-    public static void drawRect(final double x, final double y, final double x2, final double y2, final int color) {
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-
-        glColor(color);
-        glBegin(GL_QUADS);
-
-        glVertex2d(x2, y);
-        glVertex2d(x, y);
-        glVertex2d(x, y2);
-        glVertex2d(x2, y2);
-        glEnd();
-
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
     }
 
     public static double[] convertTo2D(final double x, final double y, final double z) {

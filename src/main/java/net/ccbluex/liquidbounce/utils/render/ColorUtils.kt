@@ -1,3 +1,8 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/UnlegitMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.utils.render
 
 import com.ibm.icu.text.NumberFormat
@@ -29,7 +34,7 @@ object ColorUtils {
             hexColors[i] = red and 255 shl 16 or (green and 255 shl 8) or (blue and 255)
         }
     }
-
+    @JvmStatic
     fun stripColor(input: String): String {
         return COLOR_PATTERN.matcher(input).replaceAll("")
     }

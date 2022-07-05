@@ -1,3 +1,8 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/UnlegitMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.utils.particles;
 
 import com.google.common.collect.Multimap;
@@ -15,8 +20,8 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.*;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import javax.vecmath.Vector3f;
@@ -224,7 +229,7 @@ public class PlayerParticles {
         return true;
     }
 
-    public static net.minecraft.util.Vec3 getLook(float p_174806_1_, float p_174806_2_) {
+    public static Vec3 getLook(float p_174806_1_, float p_174806_2_) {
         float var3 = MathHelper.cos(-p_174806_2_ * 0.017453292F - 3.1415927F);
         float var4 = MathHelper.sin(-p_174806_2_ * 0.017453292F - 3.1415927F);
         float var5 = -MathHelper.cos(-p_174806_1_ * 0.017453292F);

@@ -5,8 +5,8 @@ import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.ElementInfo
 import net.ccbluex.liquidbounce.ui.client.hud.element.Side
 import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.ccbluex.liquidbounce.utils.render.RenderUtils.Astolfo
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
+import net.ccbluex.liquidbounce.utils.render.RenderUtils.Astolfo
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
@@ -77,6 +77,6 @@ class Armor(x: Double = -8.0, y: Double = 57.0, scale: Float = 1F,
             GlStateManager.disableCull()
             GL11.glPopMatrix()
         }
-            return Border(-2f, -4f, 2f + 80, 29f)
-        }
+        return Border(-2f, -4f, 2f + 80, 29f)
     }
+}

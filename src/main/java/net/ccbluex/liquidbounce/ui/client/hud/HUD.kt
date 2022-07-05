@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
 package net.ccbluex.liquidbounce.ui.client.hud
 
 import net.ccbluex.liquidbounce.injection.access.StaticStorage
@@ -31,7 +26,7 @@ open class HUD : MinecraftInstance() {
          */
         fun createDefault(): HUD {
             val text1 = Text(x = 5.0, y = 8.0)
-            text1.displayString.set("Hitam Client %clientVersion%")
+            text1.displayString.set("HitamClient")
             text1.colorModeValue.set("Rainbow")
             text1.rectValue.set("Logo")
             text1.rectColorModeValue.set("Rainbow")
@@ -45,6 +40,7 @@ open class HUD : MinecraftInstance() {
                 .addElement(Notifications())
                 .addElement(Inventory())
                 .addElement(Targets())
+                .addElement(Statistics())
         }
     }
 
@@ -94,7 +90,7 @@ open class HUD : MinecraftInstance() {
         if (button == 0) {
             for (element in elements.reversed()) {
                 if (!element.isInBorder((mouseX / element.scale) - element.renderX,
-                                (mouseY / element.scale) - element.renderY)) {
+                        (mouseY / element.scale) - element.renderY)) {
                     continue
                 }
 

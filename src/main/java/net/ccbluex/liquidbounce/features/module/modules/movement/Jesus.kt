@@ -10,8 +10,10 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.MovementUtils
+import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.utils.block.BlockUtils
 import net.ccbluex.liquidbounce.utils.block.BlockUtils.getBlock
+import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.ListValue
@@ -24,13 +26,13 @@ import net.minecraft.util.BlockPos
 
 @ModuleInfo(name = "Jesus", category = ModuleCategory.MOVEMENT)
 class Jesus : Module() {
-    val modeValue = ListValue("Mode", arrayOf("Vanilla", "NCP", "Jump", "AAC", "AACFly", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "Spartan", "Twilight", "Matrix", "Dolphin", "Legit"), "Vanilla")
+    val modeValue = ListValue("Mode", arrayOf("Vanilla", "NCP", "Jump", "AAC", "AACFly", "AAC3.3.11", "AAC4.2.1", "Horizon1.4.6", "Spartan", "Twilight", "Matrix", "Medusa","Vulcan", "Dolphin", "Legit"), "Vanilla")
     private val noJumpValue = BoolValue("NoJump", false)
     private val jumpMotionValue = FloatValue("JumpMotion", 0.5f, 0.1f, 1f)
         .displayable { modeValue.equals("Jump") || modeValue.equals("AACFly") }
 
     private var nextTick = false
-
+    private val msTimer = MSTimer()
     private fun isLiquidBlock(bb: AxisAlignedBB = mc.thePlayer.entityBoundingBox): Boolean {
         return BlockUtils.collideBlock(bb) { it is BlockLiquid }
     }
@@ -44,7 +46,7 @@ class Jesus : Module() {
         val blockPos = mc.thePlayer.position.down()
 
         when (modeValue.get().lowercase()) {
-            "ncp" -> {
+            "ncp","medusa","vulcan" -> {
                 if (isLiquidBlock() && mc.thePlayer.isInsideOfMaterial(Material.air)) {
                     mc.thePlayer.motionY = 0.08
                 }
@@ -185,8 +187,10 @@ class Jesus : Module() {
 
         if (event.block is BlockLiquid && !isLiquidBlock() && !mc.thePlayer.isSneaking) {
             when (modeValue.get().lowercase()) {
-                "ncp", "vanilla", "jump" -> {
+                "ncp", "vanilla", "jump", "medusa","vulcan" -> {
                     event.boundingBox = AxisAlignedBB.fromBounds(event.x.toDouble(), event.y.toDouble(), event.z.toDouble(), (event.x + 1).toDouble(), (event.y + 1).toDouble(), (event.z + 1).toDouble())
+                    if (modeValue.get() == "Vulcan") 
+                        MovementUtils.strafe(MovementUtils.getSpeed() * 0.39f)
                 }
             }
         }
@@ -194,19 +198,45 @@ class Jesus : Module() {
 
     @EventTarget
     fun onPacket(event: PacketEvent) {
-        if (mc.thePlayer == null || !modeValue.equals("NCP")) {
+        if (mc.thePlayer == null) {
             return
         }
 
         if (event.packet is C03PacketPlayer) {
-            if (isLiquidBlock(AxisAlignedBB(mc.thePlayer.entityBoundingBox.maxX, mc.thePlayer.entityBoundingBox.maxY,
-                    mc.thePlayer.entityBoundingBox.maxZ, mc.thePlayer.entityBoundingBox.minX, mc.thePlayer.entityBoundingBox.minY - 0.01,
-                    mc.thePlayer.entityBoundingBox.minZ))) {
-                nextTick = !nextTick
-                if (nextTick) {
-                    event.packet.y -= 0.001
+            when (modeValue.get()) {
+                "NCP" -> {
+                    if (isLiquidBlock(AxisAlignedBB(mc.thePlayer.entityBoundingBox.maxX, mc.thePlayer.entityBoundingBox.maxY,
+                        mc.thePlayer.entityBoundingBox.maxZ, mc.thePlayer.entityBoundingBox.minX, mc.thePlayer.entityBoundingBox.minY - 0.01,
+                        mc.thePlayer.entityBoundingBox.minZ))) {
+                            nextTick = !nextTick
+                            if (nextTick) {
+                                event.packet.y -= 0.001
+                            }
+                        }
+                }
+                "Medusa" -> {
+                    nextTick = !nextTick
+                    event.packet.y = mc.thePlayer.posY + if (nextTick) 0.1 else -0.1
+                    if (msTimer.hasTimePassed(1000)) {
+                        event.packet.onGround = true
+                        msTimer.reset()
+                    } else {
+                        event.packet.onGround = false
+                    }
+                }
+                "Vulcan" -> {
+                    nextTick = !nextTick
+                    event.packet.y = mc.thePlayer.posY + if (nextTick) 0.1 else -0.1
+                    if (msTimer.hasTimePassed(1500)) {
+                        event.cancelEvent()
+                        PacketUtils.sendPacketNoEvent(C03PacketPlayer(true))
+                        msTimer.reset()
+                    } else {
+                        event.packet.onGround = false
+                    }
                 }
             }
+
         }
     }
 
@@ -217,7 +247,7 @@ class Jesus : Module() {
         }
 
         val block = BlockUtils.getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.01, mc.thePlayer.posZ))
-        if (noJumpValue.get() && block is BlockLiquid) {
+        if ((noJumpValue.get() || modeValue.get().equals("Vulcan"))&& block is BlockLiquid) {
             event.cancelEvent()
         }
     }

@@ -1,3 +1,8 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/UnlegitMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.utils
 
 import com.google.gson.JsonObject
@@ -85,14 +90,14 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun setTitle() {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH})")
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE}")
     }
     fun setTitle(stats:String) {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH})" + stats)
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE} - "+stats)
     }
 
     fun displayAlert(message: String) {
-        displayChatMessage("§7[§b!§7] " + LiquidBounce.COLORED_NAME + " §c» §f" + message)
+        displayChatMessage("§8[" + LiquidBounce.COLORED_NAME + "§8] §f" + message)
     }
 
     fun displayChatMessage(message: String) {

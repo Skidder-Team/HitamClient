@@ -15,7 +15,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 
 import java.util.HashMap;
 
@@ -64,8 +65,8 @@ public class MurderDetector extends Module {
                         MurderDetector murderDetector=new MurderDetector();
                         if(killerData.get(player)==null){
                             if (murderDetector.isWeapon(player.inventory.getCurrentItem().getItem())) {
-                                ClientUtils.INSTANCE.displayChatMessage("§a[Murder Detector]§c "+player.getName()+" is Killer!!!");
-                                LiquidBounce.hud.addNotification(new Notification("Murder Detector",player.getName()+" is Killer!!!" , NotifyType.WARNING,4000,500));
+                                ClientUtils.INSTANCE.displayChatMessage("§a[%module.MurderDetector.name%]§c "+player.getName()+" is Killer!!!");
+                                LiquidBounce.hud.addNotification(new Notification("§a[%module.MurderDetector.name%]§c",player.getName()+" is Killer!!!" , NotifyType.WARNING,4000,500));
                                 if(killerData.get(player) == null) killerData.put(player, new KillerData(player));
                             }
                         }else{
