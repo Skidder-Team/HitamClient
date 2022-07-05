@@ -90,10 +90,10 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun setTitle() {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE}")
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH})")
     }
     fun setTitle(stats:String) {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) | ${LiquidBounce.CLIENT_WEBSITE} - "+stats)
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.MINECRAFT_VERSION}-${LiquidBounce.CLIENT_COMMIT_ID}/${LiquidBounce.CLIENT_BRANCH}) - " + stats)
     }
 
     fun displayAlert(message: String) {
