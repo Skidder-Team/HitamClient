@@ -15,7 +15,6 @@ import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MinecraftInstance
 import java.io.File
 import java.util.function.Function
-import javax.script.ScriptEngineManager
 
 class Script(private val scriptFile: File) : MinecraftInstance() {
 

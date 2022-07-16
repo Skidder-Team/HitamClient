@@ -5,7 +5,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
     id "net.minecraftforge.gradle.forge"
     id "org.spongepowered.mixin"
-    id "com.gorylenko.gradle-git-properties" version "2.4.1"
+    id "com.gorylenko.gradle-git-properties" version "2.4.0"
 }
 
 repositories {
@@ -16,7 +16,7 @@ repositories {
     maven { url = "https://repo.getfdp.today/" }
 }
 
-version = "2.25"
+version = "2.32"
 group = "dev.skid.client"
 archivesBaseName = "HitamClient"
 
@@ -66,7 +66,7 @@ dependencies {
         exclude module: "jna-platform"
     }
     include("com.jagrosh:DiscordIPC:0.4")
-    include("me.liuli:Elixir:1.2.1") {
+    include("com.github.Kawa1Ares:Elixir:1.2.6") {
         exclude module: "kotlin-stdlib"
         exclude module: "authlib"
     }

@@ -8,7 +8,6 @@ import net.ccbluex.liquidbounce.ui.client.altmanager.GuiAltManager
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils
 import net.ccbluex.liquidbounce.utils.misc.MiscUtils
-import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.minecraft.client.gui.*
 import net.minecraft.client.resources.I18n
 import net.minecraft.util.ResourceLocation
@@ -157,16 +156,16 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         drawed = true
     }
 
-    /* For modification, please keep "Designed by XiGua" */
+    /* For modification, please keep "Designed by SkidderMC" */
     override fun initGui() {
         val defaultHeight = (this.height / 3.5).toInt()
         Thread {
             if (LiquidBounce.CLIENTTEXT.contains("Waiting") || LiquidBounce.CLIENTTEXT.contains("Oops")) {
                 try {
-                    LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpclient.club/changelogs")
+                    LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpinfo.github.io/changelogs")
                 } catch (e: Exception) {
                     try {
-                        LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpclient.club/changelogs")
+                        LiquidBounce.CLIENTTEXT = HttpUtils.get("http://fdpinfo.github.io/changelogs")
                     } catch (e: Exception) {
                         LiquidBounce.CLIENTTEXT = "Oops.. :(\$Can't get information!#Try reopen the main menu\$140\$80"
                     }
@@ -198,7 +197,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
 
         FontLoaders.F16.drawString(
-            "Made by Skid Development",
+            "Made by " + LiquidBounce.CLIENT_CREATOR,
             10f,
             this.height - 15f,
             Color(1, 1, 1, 170).rgb

@@ -1,3 +1,8 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/SkidderMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles;
 
 import net.ccbluex.liquidbounce.launch.data.legacyui.ClickGUIModule;
@@ -6,8 +11,8 @@ import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ButtonEle
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ModuleElement;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.Style;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
-import net.ccbluex.liquidbounce.ui.i18n.LanguageManager;
 import net.ccbluex.liquidbounce.ui.font.GameFontRenderer;
+import net.ccbluex.liquidbounce.ui.i18n.LanguageManager;
 import net.ccbluex.liquidbounce.utils.block.BlockUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.ccbluex.liquidbounce.value.*;
@@ -110,6 +115,8 @@ public class AstolfoStyle extends Style {
                 int yPos = moduleElement.getY() + 4;
 
                 for (final Value value : moduleValues) {
+                    if (!value.getDisplayable())
+                        continue;
                     if (value instanceof BoolValue) {
                         String text = value.getName();
                         float textWidth = Fonts.font35.getStringWidth(LanguageManager.INSTANCE.get(text.replaceAll("%","")));

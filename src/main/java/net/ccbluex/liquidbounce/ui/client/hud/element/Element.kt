@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/SkidderMC/FDPClient/
  */
 package net.ccbluex.liquidbounce.ui.client.hud.element
 
@@ -68,7 +68,7 @@ abstract class Element(
     var prevMouseX = 0F
     var prevMouseY = 0F
 
-    protected val blurValue = FloatValue("Blur", 0f, 0f, 100f).displayable { info.blur }
+    protected open val blurValue = FloatValue("Blur", 0f, 0f, 100f).displayable { info.blur }
 
     /**
      * Get all values of element

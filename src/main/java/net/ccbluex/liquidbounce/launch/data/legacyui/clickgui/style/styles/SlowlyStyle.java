@@ -1,3 +1,8 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/SkidderMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles;
 
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.Panel;
@@ -81,8 +86,10 @@ public class SlowlyStyle extends Style {
     /*public static boolean drawCheckbox(final boolean value, final int x, final int y, final int mouseX, final int mouseY, final Color color) {
         RenderUtils.drawRect(x, y, x + 20, y + 10, value ? Color.GREEN : Color.RED);
         RenderUtils.drawFilledCircle(x + (value ? 15 : 5),y + 5, 5, Color.WHITE);
+
         if(mouseX >= x && mouseX <= x + 20 && mouseY >= y && mouseY <= y + 10 && Mouse.isButtonDown(0))
             return !value;
+
         return value;
     }*/
 

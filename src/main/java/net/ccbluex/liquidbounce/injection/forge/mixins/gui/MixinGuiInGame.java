@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/SkidderMC/FDPClient/
  */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
@@ -121,6 +121,13 @@ public abstract class MixinGuiInGame extends MixinGui {
         final AntiBlind antiBlind = LiquidBounce.moduleManager.getModule(AntiBlind.class);
 
         if(antiBlind.getState() && antiBlind.getPumpkinEffectValue().get())
+            callbackInfo.cancel();
+    }
+
+    @Inject(method = "renderBossHealth", at = @At("HEAD"), cancellable = true)
+    private void renderBossHealth(CallbackInfo callbackInfo) {
+        final AntiBlind antiBlind = (AntiBlind) LiquidBounce.moduleManager.getModule(AntiBlind.class);
+        if (antiBlind.getState() && antiBlind.getBossHealth().get())
             callbackInfo.cancel();
     }
 

@@ -1,10 +1,11 @@
+/*
+ * Decompiled with CFR 0.136.
+ */
 package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
 
+
 import com.google.common.collect.Lists;
-import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
-import net.ccbluex.liquidbounce.features.module.modules.client.HUD;
-import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -68,3 +69,4 @@ public class ClickyUI extends GuiScreen {
     }
 
 }
+

@@ -1,4 +1,10 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/SkidderMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.injection.forge.mixins.render;
+
 
 import net.ccbluex.liquidbounce.features.module.modules.client.Animations;
 import net.minecraft.client.particle.EffectRenderer;
@@ -64,5 +70,5 @@ public abstract class MixinEffectRenderer {
     private void removeBlockBreakingParticles_Forge(CallbackInfo ci) {
         if (Animations.getNoBlockParticles().get())
             ci.cancel();
-    }
+}
 }

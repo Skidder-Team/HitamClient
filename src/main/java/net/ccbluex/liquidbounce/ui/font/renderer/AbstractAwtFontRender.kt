@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.ui.font.renderer
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.ui.font.FontsGC
 import net.ccbluex.liquidbounce.ui.font.renderer.glyph.GlyphFontRenderer
-import net.ccbluex.liquidbounce.ui.font.renderer.vector.VectorFontRenderer
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import org.lwjgl.opengl.GL11
 import java.awt.Canvas
@@ -96,7 +95,8 @@ abstract class AbstractAwtFontRender(val font: Font) {
             return if (LiquidBounce.fileManager.specialConfig.useGlyphFontRenderer) {
                 GlyphFontRenderer(font)
             } else {
-                VectorFontRenderer(font)
+                //VectorFontRenderer(font)
+                GlyphFontRenderer(font)
             }
         }
     }

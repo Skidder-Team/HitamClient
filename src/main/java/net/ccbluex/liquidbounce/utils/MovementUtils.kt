@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/SkidderMC/FDPClient/
  */
 package net.ccbluex.liquidbounce.utils
 
@@ -44,6 +44,7 @@ object MovementUtils : MinecraftInstance() {
         return mc.thePlayer.motionX != 0.0 && mc.thePlayer.motionZ != 0.0 && mc.thePlayer.motionY != 0.0
     }
 
+    @JvmStatic
     fun strafe(speed: Float) {
         if (!isMoving()) return
         val yaw = direction

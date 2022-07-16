@@ -30,7 +30,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
 import java.util.*
-import kotlin.concurrent.thread
 
 object LiquidBounce {
 
@@ -43,7 +42,7 @@ object LiquidBounce {
     var Darkmode = true
     const val COLORED_NAME = "§b§lHitam Client"
     const val CLIENT_CREATOR = "Skid Development (Necro, Liep_, Cavry)"
-    const val CLIENT_WEBSITE = "hitam.client"
+    const val CLIENT_WEBSITE = "hitamnig.ga"
     const val MINECRAFT_VERSION = "1.8.9"
     const val VERSIONTYPE = "development"
     @JvmField
@@ -58,7 +57,7 @@ object LiquidBounce {
 
     // 自动读取客户端版本 (cina)
     @JvmField
-    val CLIENT_VERSION = "2.26"
+    val CLIENT_VERSION = "2.32"
     @JvmField
     val CLIENT_BRANCH = (gitInfo["git.branch"] ?: "unknown").let {
         if (it == "main") "dev" else it
@@ -191,15 +190,6 @@ object LiquidBounce {
         hud = HUD.createDefault()
 
         fileManager.loadConfigs(fileManager.hudConfig, fileManager.xrayConfig)
-
-        // start discord rpc
-        thread {
-            try {
-                DiscordRPC.run()
-            } catch (e: Throwable) {
-                ClientUtils.logError("Failed to load DiscordRPC.", e)
-            }
-        }
 
         // run update checker
         /*

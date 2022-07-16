@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/SkidderMC/FDPClient/
  */
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
@@ -18,7 +18,6 @@ import net.ccbluex.liquidbounce.utils.render.EaseUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.IntegerValue
-import net.minecraft.client.gui.FontRenderer
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.max
@@ -39,7 +38,7 @@ class Notifications(
     private val TitleShadow = BoolValue("Title Shadow", false)
     private val MotionBlur = BoolValue("Motion blur", false)
     private val ContentShadow = BoolValue("Content Shadow", true)
-    //private val fontValue = FontValue("Font", Fonts.font35)
+ 
 
     /**
      * Example notification for CustomHUD designer
@@ -68,7 +67,6 @@ class Notifications(
 
             exampleNotification.fadeState = FadeState.STAY
             exampleNotification.displayTime = System.currentTimeMillis()
-//            exampleNotification.x = exampleNotification.textLength + 8F
 
             return Border(-exampleNotification.width.toFloat(), -exampleNotification.height.toFloat(), 0F, 0F)
         }
@@ -87,7 +85,7 @@ class Notification(
     val animeTime: Int = 500
 ) {
     var width = 100
-    val height = 25
+    val height = 27
 
     var fadeState = FadeState.IN
     var nowY = -height
@@ -159,14 +157,10 @@ class Notification(
         }
 
         // draw notify
-//        GL11.glPushMatrix()
-//        GL11.glEnable(GL11.GL_SCISSOR_TEST)
-//        GL11.glScissor(width-(width*pct).toFloat(),0F, width.toFloat(),height.toFloat())
         var colors=Color(type.renderColor.red,type.renderColor.green,type.renderColor.blue,alpha/3);
         if(MotionBlur) {
             when (fadeState) {
                 FadeState.IN -> {
-                    //RenderUtils.drawRoundedCornerRect(3F+1f, 0F, width.toFloat()+1f, height.toFloat()-5f,2f ,colors.rgb)
                     RenderUtils.drawRoundedCornerRect(
                         3f,
                         0F,
@@ -229,14 +223,13 @@ class Notification(
         }
         RenderUtils.drawRoundedCornerRect(0F+3f, 0F, width.toFloat()+5f, height.toFloat()-5f,2f ,colors.rgb)
         RenderUtils.drawRoundedCornerRect(0F+3f, 0F, max(width - width * ((nowTime - displayTime) / (animeTime * 2F + time))+5f, 0F), height.toFloat()-5f,2f ,Color(0,0,0,26).rgb)
-        //RenderUtils.drawRoundedCornerRect(2F, 2F, width.toFloat()-2F, height.toFloat()-7F,1f ,Color(242,242,242, 100).rgb)
-        //font.DisplayFont2(FontLoaders.C16,content, 4F, 9F, Color(31,41,55).rgb,true)
         FontLoaders.C12.DisplayFont2(FontLoaders.C12,title, 4F, 3F, Color(31,41,55).rgb,TitleShadow)
         font.DisplayFont2(font,content, 4F, 10F, Color(31,41,55).rgb,ContentShadow)
         return false
     }
 }
 
+//NotifyType Color
 enum class NotifyType(var renderColor: Color) {
     SUCCESS(Color(0x36D399)),
     ERROR(Color(0xF87272)),

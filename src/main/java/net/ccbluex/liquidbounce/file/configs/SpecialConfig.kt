@@ -17,17 +17,17 @@ class SpecialConfig(file: File) : FileConfig(file) {
     override fun loadConfig(config: String) {
         val json = JsonParser().parse(config).asJsonObject
 
-        LiquidBounce.commandManager.prefix = ';'
+        LiquidBounce.commandManager.prefix = '.'
         AutoReconnect.delay = 5000
         AntiForge.enabled = true
         AntiForge.blockFML = true
         AntiForge.blockProxyPacket = true
         AntiForge.blockPayloadPackets = true
         ServerSpoof.enable = false
-        ServerSpoof.address = "cavrynet.work"
+        ServerSpoof.address = "redesky.com"
         GuiBackground.enabled = true
         GuiBackground.particles = false
-        GuiAltManager.randomAltField.text = "Hitam_%s%s%s"
+        GuiAltManager.randomAltField.text = "F%nD%nP%n_%s%s%s"
         useGlyphFontRenderer = true
         ProxyManager.isEnable = false
         ProxyManager.proxy = "127.0.0.1:10808"

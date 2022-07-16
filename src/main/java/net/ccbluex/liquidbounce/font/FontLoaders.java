@@ -34,7 +34,7 @@ public abstract class FontLoaders {
     public static Font getFont(int size) {
         Font font;
         try {
-            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/Roboto-Regular.ttf")).getInputStream()).deriveFont(0, (float) size);
+            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/regular.ttf")).getInputStream()).deriveFont(0, (float) size);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Error loading font");
@@ -46,7 +46,7 @@ public abstract class FontLoaders {
     public static Font getComfortaa(int size) {
         Font font;
         try {
-            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/Roboto-Regular.ttf")).getInputStream()).deriveFont(0, (float) size);
+            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/regular.ttf")).getInputStream()).deriveFont(0, (float) size);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Error loading font");
@@ -58,7 +58,7 @@ public abstract class FontLoaders {
     public static Font getNovo(int size) {
         Font font;
         try {
-            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/Roboto-Regular.ttf")).getInputStream()).deriveFont(0, (float) size);
+            font = Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fdpclient/font/regular.ttf")).getInputStream()).deriveFont(0, (float) size);
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Error loading font");

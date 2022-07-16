@@ -1,12 +1,20 @@
+/*
+ * FDPClient Hacked Client
+ * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
+ * https://github.com/SkidderMC/FDPClient/
+ */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.KeyEvent;
 import net.ccbluex.liquidbounce.features.module.modules.client.Animations;
+import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
 import net.ccbluex.liquidbounce.features.module.modules.world.ChestStealer;
+import net.ccbluex.liquidbounce.ui.i18n.LanguageManager;
 import net.ccbluex.liquidbounce.utils.extensions.RendererExtensionKt;
 import net.ccbluex.liquidbounce.utils.render.EaseUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -32,12 +40,28 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     protected int guiTop;
 
     private long guiOpenTime = -1;
-
     private boolean translated = false;
 
-    @Inject(method = "initGui", at = @At("RETURN"))
-    private void initGuiReturn(CallbackInfo callbackInfo) {
-        guiOpenTime = System.currentTimeMillis();
+    @Shadow
+    protected abstract boolean checkHotbarKeys(int keyCode);
+
+    @Shadow private int dragSplittingButton;
+    @Shadow private int dragSplittingRemnant;
+
+    public void injectInitGui(CallbackInfo callbackInfo){
+        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        if (guiScreen instanceof GuiChest) {
+            buttonList.add(new GuiButton(114514, this.width / 2 - 100, this.guiTop - 30, 99, 20, LanguageManager.INSTANCE.getAndFormat("ui.chest.disable","%module.KillAura.name%")));
+            buttonList.add(new GuiButton(1919810, this.width / 2 + 1, this.guiTop - 30, 99, 20, LanguageManager.INSTANCE.getAndFormat("ui.chest.disable","%module.ChestStealer.name%")));
+        }
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        if (button.id == 114514)
+            LiquidBounce.moduleManager.getModule(KillAura.class).setState(false);
+        if (button.id == 1919810)
+            LiquidBounce.moduleManager.getModule(ChestStealer.class).setState(false);
     }
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
@@ -87,6 +111,27 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
         }
     }
 
+    @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
+    private void checkCloseClick(int mouseX, int mouseY, int mouseButton, CallbackInfo ci) {
+        if (mouseButton - 100 == mc.gameSettings.keyBindInventory.getKeyCode()) {
+            mc.thePlayer.closeScreen();
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "mouseClicked", at = @At("TAIL"))
+    private void checkHotbarClicks(int mouseX, int mouseY, int mouseButton, CallbackInfo ci) {
+        checkHotbarKeys(mouseButton - 100);
+    }
+
+    @Inject(method = "updateDragSplitting", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;copy()Lnet/minecraft/item/ItemStack;"), cancellable = true)
+    private void fixRemnants(CallbackInfo ci) {
+        if (this.dragSplittingButton == 2) {
+            this.dragSplittingRemnant = mc.thePlayer.inventory.getItemStack().getMaxStackSize();
+            ci.cancel();
+        }
+    }
+
     @Inject(method = "drawScreen", at = @At("RETURN"))
     private void drawScreenReturn(CallbackInfo callbackInfo) {
         if (translated) {
@@ -98,11 +143,11 @@ public abstract class MixinGuiContainer extends MixinGuiScreen {
     @Inject(method = "keyTyped", at = @At("HEAD"))
     private void keyTyped(char typedChar, int keyCode, CallbackInfo ci) {
         ChestStealer chestStealer = LiquidBounce.moduleManager.getModule(ChestStealer.class);
-       try {
-           if (chestStealer.getState() && chestStealer.getSilentTitleValue().get() && mc.currentScreen instanceof GuiChest)
-               LiquidBounce.eventManager.callEvent(new KeyEvent(keyCode == 0 ? typedChar + 256 : keyCode));
-       }catch (Exception e){
+        try {
+            if (chestStealer.getState() && chestStealer.getSilentTitleValue().get() && mc.currentScreen instanceof GuiChest)
+                LiquidBounce.eventManager.callEvent(new KeyEvent(keyCode == 0 ? typedChar + 256 : keyCode));
+        }catch (Exception e){
 
-       }
+        }
     }
 }
