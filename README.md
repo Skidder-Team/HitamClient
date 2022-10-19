@@ -1,1 +1,1 @@
-Client itu harus hitam!! jangan putih putih
+affan hitam
