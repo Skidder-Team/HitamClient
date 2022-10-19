@@ -117,7 +117,7 @@ object LiquidBounce {
      */
     fun initClient() {
         ClientUtils.logInfo("Loading $CLIENT_NAME $CLIENT_VERSION, by $CLIENT_CREATOR")
-        ClientUtils.logInfo("Dapa kontol btw (Dapry)")
+        ClientUtils.logInfo("Loading $CLIENT_NAME")
         ClientUtils.setTitle("Initializing...");
         val startTime = System.currentTimeMillis()
         // Create file manager
