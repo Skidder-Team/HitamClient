@@ -1,12 +1,13 @@
 package net.ccbluex.liquidbounce.ui.client.hud
 
-import net.ccbluex.liquidbounce.injection.access.StaticStorage
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.*
-import net.ccbluex.liquidbounce.utils.ClassUtils
+import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Target
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MinecraftInstance
+import net.minecraft.client.gui.ScaledResolution
+import net.minecraft.entity.player.EntityPlayer
 import org.lwjgl.opengl.GL11
 import kotlin.math.max
 import kotlin.math.min
@@ -18,62 +19,54 @@ open class HUD : MinecraftInstance() {
 
     companion object {
 
-        val elements = ClassUtils.resolvePackage("${HUD::class.java.`package`.name}.element.elements", Element::class.java)
-            .toTypedArray()
+        val elements = arrayOf(
+            Armor::class.java,
+            Arraylist::class.java,
+            Effects::class.java,
+            Notifications::class.java,
+            Text::class.java,
+            ScoreboardElement::class.java,
+            Target::class.java,
+            Radar::class.java
+        )
 
         /**
          * Create default HUD
          */
-        fun createDefault(): HUD {
-            val text1 = Text(x = 1.0, y = 326.00)
-            text1.displayString.set("FPS: %fps%")
-            text1.colorModeValue.set("Rainbow")
-            text1.rectValue.set("None")
-            text1.rectColorModeValue.set("Rainbow")
-
-            val text2 = Text(x = 1.0, y = 341.00)
-            text2.displayString.set("XYZ: %x%, %y%, %z%")
-            text2.colorModeValue.set("Rainbow")
-            text2.rectValue.set("None")
-            text2.rectColorModeValue.set("Rainbow")
-
-            return HUD()
-                .addElement(text1)
-                .addElement(text2)
-                .addElement(Arraylist())
-                .addElement(ScoreboardElement())
-                .addElement(Armor())
-                .addElement(Effects())
-                .addElement(Notifications())
-                .addElement(Inventory())
-                .addElement(Targets())
-                .addElement(Statistics())
-        }
+        @JvmStatic
+        fun createDefault() = HUD()
+            .addElement(Text.defaultClient())
+            .addElement(Arraylist())
+            .addElement(ScoreboardElement())
+            .addElement(Armor())
+            .addElement(Effects())
+            .addElement(Notifications())
+            .addElement(Target())
     }
 
     /**
      * Render all elements
      */
-    fun render(designer: Boolean, partialTicks: Float) {
-        for (element in elements) {
+    fun render(designer: Boolean) {
+        elements.forEach { element ->
             GL11.glPushMatrix()
-            GL11.glScalef(element.scale, element.scale, element.scale)
+
+            if (!element.info.disableScale && element.scale != 1F)
+                GL11.glScalef(element.scale, element.scale, element.scale)
+
             GL11.glTranslated(element.renderX, element.renderY, 0.0)
 
             try {
-                if (element.info.blur) {
-                    element.drawBoarderBlur()
-                }
+                element.border = element.drawElement()
 
-                element.border = element.drawElement(partialTicks)
-
-                if (designer) {
+                if (designer)
                     element.border?.draw()
-                }
             } catch (ex: Exception) {
-                ClientUtils.logError("Something went wrong while drawing ${element.name} element in HUD.", ex)
+                ClientUtils.getLogger()
+                    .error("Something went wrong while drawing ${element.name} element in HUD.", ex)
             }
 
+            GL11.glScalef(1f, 1f, 1f)
             GL11.glPopMatrix()
         }
     }
@@ -86,24 +79,36 @@ open class HUD : MinecraftInstance() {
             element.updateElement()
     }
 
+    fun handleDamage(ent: EntityPlayer) {
+        for (element in elements) {
+            if (element.info.retrieveDamage)
+                element.handleDamage(ent)
+        }
+    }
+
     /**
      * Handle mouse click
      */
     fun handleMouseClick(mouseX: Int, mouseY: Int, button: Int) {
         for (element in elements)
-            element.handleMouseClick((mouseX / element.scale) - element.renderX, (mouseY / element.scale) -
-                    element.renderY, button)
+            element.handleMouseClick(
+                (mouseX / element.scale) - element.renderX, (mouseY / element.scale)
+                        - element.renderY, button
+            )
 
         if (button == 0) {
             for (element in elements.reversed()) {
-                if (!element.isInBorder((mouseX / element.scale) - element.renderX,
-                        (mouseY / element.scale) - element.renderY)) {
+                if (!element.isInBorder(
+                        (mouseX / element.scale) - element.renderX,
+                        (mouseY / element.scale) - element.renderY
+                    )
+                )
                     continue
-                }
 
                 element.drag = true
                 elements.remove(element)
                 elements.add(element)
+                elements.sortBy { -it.info.priority }
                 break
             }
         }
@@ -121,11 +126,10 @@ open class HUD : MinecraftInstance() {
      * Handle mouse move
      */
     fun handleMouseMove(mouseX: Int, mouseY: Int) {
-        if (mc.currentScreen !is GuiHudDesigner) {
+        if (mc.currentScreen !is GuiHudDesigner)
             return
-        }
 
-        val scaledResolution = StaticStorage.scaledResolution
+        val scaledResolution = ScaledResolution(mc)
 
         for (element in elements) {
             val scaledX = mouseX / element.scale
@@ -140,9 +144,8 @@ open class HUD : MinecraftInstance() {
                 val moveX = scaledX - prevMouseX
                 val moveY = scaledY - prevMouseY
 
-                if (moveX == 0F && moveY == 0F) {
+                if (moveX == 0F && moveY == 0F)
                     continue
-                }
 
                 val border = element.border ?: continue
 
@@ -155,12 +158,10 @@ open class HUD : MinecraftInstance() {
                 val width = scaledResolution.scaledWidth / element.scale
                 val height = scaledResolution.scaledHeight / element.scale
 
-                if ((element.renderX + minX + moveX >= 0.0 || moveX > 0) && (element.renderX + maxX + moveX <= width || moveX < 0)) {
+                if ((element.renderX + minX + moveX >= 0.0 || moveX > 0) && (element.renderX + maxX + moveX <= width || moveX < 0))
                     element.renderX = moveX.toDouble()
-                }
-                if ((element.renderY + minY + moveY >= 0.0 || moveY > 0) && (element.renderY + maxY + moveY <= height || moveY < 0)) {
+                if ((element.renderY + minY + moveY >= 0.0 || moveY > 0) && (element.renderY + maxY + moveY <= height || moveY < 0))
                     element.renderY = moveY.toDouble()
-                }
             }
         }
     }
@@ -178,6 +179,8 @@ open class HUD : MinecraftInstance() {
      */
     fun addElement(element: Element): HUD {
         elements.add(element)
+        elements.sortBy { -it.info.priority }
+        element.updateElement()
         return this
     }
 
@@ -187,6 +190,7 @@ open class HUD : MinecraftInstance() {
     fun removeElement(element: Element): HUD {
         element.destroyElement()
         elements.remove(element)
+        elements.sortBy { -it.info.priority }
         return this
     }
 
@@ -203,10 +207,12 @@ open class HUD : MinecraftInstance() {
     /**
      * Add [notification]
      */
-    fun addNotification(notification: Notification) = elements.any { it is Notifications } && notifications.add(notification)
+    fun addNotification(notification: Notification) =
+        elements.any { it is Notifications } && notifications.add(notification)
 
     /**
      * Remove [notification]
      */
     fun removeNotification(notification: Notification) = notifications.remove(notification)
+
 }
