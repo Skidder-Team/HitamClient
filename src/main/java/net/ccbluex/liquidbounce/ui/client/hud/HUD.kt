@@ -25,14 +25,21 @@ open class HUD : MinecraftInstance() {
          * Create default HUD
          */
         fun createDefault(): HUD {
-            val text1 = Text(x = 5.0, y = 8.0)
-            text1.displayString.set("HitamClient")
+            val text1 = Text(x = 1.0, y = 326.00)
+            text1.displayString.set("FPS: %fps%")
             text1.colorModeValue.set("Rainbow")
-            text1.rectValue.set("Logo")
+            text1.rectValue.set("None")
             text1.rectColorModeValue.set("Rainbow")
+
+            val text2 = Text(x = 1.0, y = 341.00)
+            text2.displayString.set("XYZ: %x%, %y%, %z%")
+            text2.colorModeValue.set("Rainbow")
+            text2.rectValue.set("None")
+            text2.rectColorModeValue.set("Rainbow")
 
             return HUD()
                 .addElement(text1)
+                .addElement(text2)
                 .addElement(Arraylist())
                 .addElement(ScoreboardElement())
                 .addElement(Armor())
