@@ -16,7 +16,7 @@ repositories {
 }
 
 version = "2.22"
-group = "dev.skid.client"
+group = "team.kusuma.client"
 archivesBaseName = "HitamClient"
 
 sourceCompatibility = targetCompatibility = 1.8
